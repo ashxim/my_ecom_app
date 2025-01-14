@@ -60,8 +60,8 @@ class HotDeals extends StatelessWidget {
                         ),
                         IconButton(
                             onPressed: () {},
-                            icon: Icon(
-                              icon,
+                            icon: const Icon(
+                              Icons.favorite_border_outlined,
                               color: AppColor.white,
                             ))
                       ],

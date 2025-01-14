@@ -1,8 +1,7 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:my_ecom_app/core/themes/app-color.dart';
 import 'package:my_ecom_app/core/themes/app_font.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 
 class ProductDetails extends StatelessWidget {
   const ProductDetails({super.key});
@@ -52,7 +51,6 @@ class ProductDetails extends StatelessWidget {
             ],
           ),
           body: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
             child: Column(
               children: [
                 // Product Image
@@ -61,7 +59,7 @@ class ProductDetails extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image.network(
-                      "https://icon2.cleanpng.com/20180422/ocw/kisspng-apple-watch-pebble-smartwatch-wearable-technology-apple-watch-5adc170f2ac9d2.9128155815243732631753.jpg", // Replace with actual image URL
+                      "https://static.vecteezy.com/system/resources/thumbnails/017/054/078/small/headphones-design-3d-rendering-for-product-mockup-free-png.png", // Replace with actual image URL
                       height: screenHeight * 0.3,
                       width: screenWidth * 0.8,
                       fit: BoxFit.cover,
@@ -79,17 +77,31 @@ class ProductDetails extends StatelessWidget {
                     ),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(15.0),
+                    padding: const EdgeInsets.all(20.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Product name',
-                          style: AppFont.widgetTitle(
-                              color: AppColor.Grey, fontSize: 35),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Product Name',
+                              style: AppFont.widgetTitle(
+                                color: Colors.white,
+                                fontSize: 25,
+                              ),
+                            ),
+                            IconButton(
+                                onPressed: () {},
+                                icon: Icon(
+                                  size: 35,
+                                  FluentIcons.heart_circle_24_regular,
+                                  color: AppColor.Grey,
+                                ))
+                          ],
                         ),
                         SizedBox(
-                          height: 20,
+                          height: 15,
                         ),
                         Text(
                           "n today’s rapidly evolving world, innovation has become the cornerstone of progress, shaping industries, societies, and the way we live our lives. From technology to healthcare, education to business, the relentless pursuit of innovation drives humanity toward solutions to some of its most pressing challenges."
@@ -99,62 +111,34 @@ class ProductDetails extends StatelessWidget {
                             color: Colors.white,
                             fontSize: 18,
                           ),
-                        ),
-                        // Add more content here
-                        const SizedBox(height: 20),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                '80 £',
-                                style: AppFont.widgetTitle(
-                                    color: AppColor.blue, fontSize: 35),
-                              ),
-                              InkWell(
-                                onTap: () {},
-                                child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(20),
-                                    child: Stack(
-                                      children: [
-                                        // Blurred Background
-                                        BackdropFilter(
-                                          filter: ImageFilter.blur(
-                                              sigmaX: 10,
-                                              sigmaY: 10), // Blur effect
-                                          child: Container(
-                                            color: Colors
-                                                .transparent, // Background transparency
-                                          ),
-                                        ),
 
-                                        // Foreground with semi-transparent color
-                                        Container(
-                                            width: screenWidth * 0.4,
-                                            height: screenHeight * 0.1,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              color: AppColor.blue.withOpacity(
-                                                  0.2), // Semi-transparent blue
-                                            ),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                Text(
-                                                  'Add To Cart',
-                                                  style: AppFont.widgetTitle(
-                                                      color: AppColor.white,
-                                                      fontSize: 20),
-                                                ),
-                                                Icon(
-                                                    Icons.shopping_bag_outlined)
-                                              ],
-                                            ))
-                                      ],
-                                    )),
-                              )
-                            ])
+                          // Add more content here
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              '80£',
+                              style: AppFont.widgetTitle(
+                                  color: AppColor.blue, fontSize: 35),
+                            ),
+                            ElevatedButton.icon(
+                              onPressed: () {},
+                              icon: Icon(
+                                FluentIcons.shopping_bag_arrow_left_20_regular,
+                                color: AppColor.Black,
+                              ),
+                              label: Text(
+                                'Add to Cart',
+                                style: AppFont.widgetTitle(
+                                    color: AppColor.Black, fontSize: 25),
+                              ),
+                            )
+                          ],
+                        )
                       ],
                     ),
                   ),

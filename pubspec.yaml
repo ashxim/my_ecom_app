@@ -40,6 +40,7 @@ dependencies:
   google_fonts: ^6.2.1
   crystal_navigation_bar: ^1.0.2
   iconly: ^1.0.1
+  fluentui_system_icons: ^1.1.270
 
 dev_dependencies:
   flutter_test:
