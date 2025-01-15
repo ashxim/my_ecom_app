@@ -3,17 +3,15 @@ import 'package:my_ecom_app/core/themes/app-color.dart';
 import 'package:my_ecom_app/core/themes/app_font.dart';
 import 'package:my_ecom_app/features/product/presentation/screens/cart.dart';
 import 'package:my_ecom_app/features/product/presentation/screens/product_details.dart';
-import 'package:my_ecom_app/features/product/presentation/widgets/categories.dart';
-import 'package:my_ecom_app/features/product/presentation/widgets/hot_deals.dart';
-import 'package:my_ecom_app/features/product/presentation/widgets/offers.dart';
+import 'package:my_ecom_app/features/product/presentation/widgets/home%20widget/categories.dart';
+import 'package:my_ecom_app/features/product/presentation/widgets/home%20widget/hot_deals.dart';
+import 'package:my_ecom_app/features/product/presentation/widgets/home%20widget/offers.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
     return Stack(
       children: [
         // Gradient background
@@ -43,7 +41,7 @@ class MyHomePage extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => CartScreen(),
+                          builder: (context) => const CartScreen(),
                         ));
                   },
                   icon: const Icon(

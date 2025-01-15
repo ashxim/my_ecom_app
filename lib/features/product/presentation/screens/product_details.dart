@@ -3,7 +3,6 @@ import 'package:my_ecom_app/core/themes/app-color.dart';
 import 'package:my_ecom_app/core/themes/app_font.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:my_ecom_app/features/product/presentation/screens/cart.dart';
-import 'package:my_ecom_app/features/product/presentation/widgets/btm_nav_bar.dart';
 
 class ProductDetails extends StatelessWidget {
   const ProductDetails({super.key});
@@ -47,7 +46,7 @@ class ProductDetails extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => CartScreen(),
+                        builder: (context) => const CartScreen(),
                       ));
                 },
                 icon: const Icon(

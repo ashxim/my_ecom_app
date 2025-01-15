@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:my_ecom_app/features/product/presentation/screens/my_home_page.dart';
 import 'package:my_ecom_app/features/product/presentation/screens/search_screen.dart';
+import 'package:my_ecom_app/features/product/presentation/screens/user_profile.dart';
 import 'package:my_ecom_app/features/product/presentation/screens/wishlist.dart';
 
 class BtmNavBar extends StatefulWidget {
@@ -38,7 +39,7 @@ class _BtmNavBarState extends State<BtmNavBar> {
           MyHomePage(),
           Wishlist(),
           SearchScreen(),
-          Center(child: Text("Profile", style: TextStyle(fontSize: 24))),
+          UserProfileWidget()
         ],
       ),
       bottomNavigationBar: CrystalNavigationBar(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_ecom_app/core/themes/app-color.dart';
 import 'package:my_ecom_app/core/themes/app_font.dart';
 import 'package:my_ecom_app/features/product/presentation/screens/product_details.dart';
-import 'package:my_ecom_app/features/product/presentation/widgets/hot_deals.dart';
+import 'package:my_ecom_app/features/product/presentation/widgets/home%20widget/hot_deals.dart';
 
 class Wishlist extends StatelessWidget {
   const Wishlist({super.key});
