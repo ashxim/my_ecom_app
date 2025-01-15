@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-# my_ecom_app
-=======
-=======
->>>>>>> 64f9be128b4e4eec747dc324e94be80f3513a1c7
 # my_ecom_app
 
 A new Flutter project.
