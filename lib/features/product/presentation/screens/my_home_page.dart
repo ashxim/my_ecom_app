@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_ecom_app/core/themes/app-color.dart';
 import 'package:my_ecom_app/core/themes/app_font.dart';
+import 'package:my_ecom_app/features/product/presentation/screens/cart.dart';
 import 'package:my_ecom_app/features/product/presentation/screens/product_details.dart';
 import 'package:my_ecom_app/features/product/presentation/widgets/categories.dart';
 import 'package:my_ecom_app/features/product/presentation/widgets/hot_deals.dart';
@@ -38,7 +39,13 @@ class MyHomePage extends StatelessWidget {
             ),
             actions: [
               IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CartScreen(),
+                        ));
+                  },
                   icon: const Icon(
                     size: 28,
                     Icons.shopping_bag_outlined,

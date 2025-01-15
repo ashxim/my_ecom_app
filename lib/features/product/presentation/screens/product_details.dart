@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:my_ecom_app/core/themes/app-color.dart';
 import 'package:my_ecom_app/core/themes/app_font.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:my_ecom_app/features/product/presentation/screens/cart.dart';
+import 'package:my_ecom_app/features/product/presentation/widgets/btm_nav_bar.dart';
 
 class ProductDetails extends StatelessWidget {
   const ProductDetails({super.key});
@@ -41,7 +43,13 @@ class ProductDetails extends StatelessWidget {
             ),
             actions: [
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CartScreen(),
+                      ));
+                },
                 icon: const Icon(
                   size: 28,
                   Icons.shopping_bag_outlined,
@@ -93,14 +101,14 @@ class ProductDetails extends StatelessWidget {
                             ),
                             IconButton(
                                 onPressed: () {},
-                                icon: Icon(
+                                icon: const Icon(
                                   size: 35,
                                   FluentIcons.heart_circle_24_regular,
                                   color: AppColor.Grey,
                                 ))
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
                         Text(
@@ -114,7 +122,7 @@ class ProductDetails extends StatelessWidget {
 
                           // Add more content here
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         Row(
@@ -127,7 +135,7 @@ class ProductDetails extends StatelessWidget {
                             ),
                             ElevatedButton.icon(
                               onPressed: () {},
-                              icon: Icon(
+                              icon: const Icon(
                                 FluentIcons.shopping_bag_arrow_left_20_regular,
                                 color: AppColor.Black,
                               ),

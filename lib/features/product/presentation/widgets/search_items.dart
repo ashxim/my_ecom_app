@@ -79,7 +79,7 @@ class SearchItems extends StatelessWidget {
                       children: [
                         IconButton(
                           onPressed: () {},
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.favorite_border_outlined,
                             color: AppColor.white,
                             size: 25, // Adjusted size
@@ -87,7 +87,7 @@ class SearchItems extends StatelessWidget {
                         ),
                         IconButton(
                           onPressed: () {},
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.shopping_bag_outlined,
                             color: AppColor.white,
                             size: 25, // Adjusted size

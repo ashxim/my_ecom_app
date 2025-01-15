@@ -97,10 +97,10 @@ class SearchScreen extends StatelessWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => ProductDetails(),
+                                  builder: (context) => const ProductDetails(),
                                 ));
                           },
-                          child: SearchItems());
+                          child: const SearchItems());
                     },
                   ),
                 ),
