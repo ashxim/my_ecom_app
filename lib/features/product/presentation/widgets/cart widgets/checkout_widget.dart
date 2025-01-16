@@ -153,7 +153,7 @@ class CheckoutWidget extends StatelessWidget {
               Center(
                 child: SwipeButton.expand(
                   width: 150,
-                  thumb: Icon(
+                  thumb: const Icon(
                     Icons.double_arrow_rounded,
                     color: Colors.white,
                   ),
@@ -171,9 +171,9 @@ class CheckoutWidget extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20),
                       ),
                     ),
-                    label: Padding(
-                      padding: const EdgeInsets.only(left: 35),
-                      child: const Text(
+                    label: const Padding(
+                      padding: EdgeInsets.only(left: 35),
+                      child: Text(
                         "Checkout",
                         style: TextStyle(color: Colors.white, fontSize: 16),
                       ),

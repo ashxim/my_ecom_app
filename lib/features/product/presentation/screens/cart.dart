@@ -56,12 +56,12 @@ class CartScreen extends StatelessWidget {
           ),
         ),
         // Positioned container at the bottom
-        Positioned(
+        const Positioned(
             bottom: 0, // Position at the bottom of the screen
             left: 0, // Align with the left edge
             right: 0, // Align with the right edge
             child: ClipRRect(
-                borderRadius: const BorderRadius.only(
+                borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20),
                   topRight: Radius.circular(20),
                 ),
