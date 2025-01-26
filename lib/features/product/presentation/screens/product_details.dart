@@ -3,14 +3,45 @@ import 'package:my_ecom_app/core/themes/app-color.dart';
 import 'package:my_ecom_app/core/themes/app_font.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:my_ecom_app/features/product/presentation/screens/cart.dart';
+import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 
-class ProductDetails extends StatelessWidget {
-  const ProductDetails({super.key});
+class ProductDetails extends StatefulWidget {
+  final String title;
+  final String thumbnail;
+  final String description;
+  final double rating;
+  final double price;
+  final double? discountPercentage;
+
+  const ProductDetails({
+    super.key,
+    required this.title,
+    required this.thumbnail,
+    required this.description,
+    required this.price,
+    this.discountPercentage,
+    required this.rating,
+  });
 
   @override
+  State<ProductDetails> createState() => _ProductDetailsState();
+}
+
+class _ProductDetailsState extends State<ProductDetails> {
+  @override
   Widget build(BuildContext context) {
+    String myprice = widget.price.toString();
+    String mydiscount = widget.price.toString();
+
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
+    double _rating = widget.rating;
+    @override
+    void initState() {
+      super.initState();
+      _rating = widget
+          .rating; // Initialize with the rating passed from the constructor
+    }
 
     return Stack(
       children: [
@@ -66,7 +97,7 @@ class ProductDetails extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image.network(
-                      "https://static.vecteezy.com/system/resources/thumbnails/017/054/078/small/headphones-design-3d-rendering-for-product-mockup-free-png.png", // Replace with actual image URL
+                      widget.thumbnail, // Replace with actual image URL
                       height: screenHeight * 0.3,
                       width: screenWidth * 0.8,
                       fit: BoxFit.cover,
@@ -75,6 +106,7 @@ class ProductDetails extends StatelessWidget {
                 ),
                 // Content area
                 Container(
+                  height: screenWidth,
                   width: double.infinity,
                   decoration: const BoxDecoration(
                     color: AppColor.principle,
@@ -86,16 +118,22 @@ class ProductDetails extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              'Product Name',
-                              style: AppFont.widgetTitle(
-                                color: Colors.white,
-                                fontSize: 25,
+                            Flexible(
+                              flex: 1,
+                              child: Text(
+                                widget.title,
+                                maxLines: 3,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppFont.widgetTitle(
+                                  color: Colors.white,
+                                  fontSize: 25,
+                                ),
                               ),
                             ),
                             IconButton(
@@ -107,13 +145,25 @@ class ProductDetails extends StatelessWidget {
                                 ))
                           ],
                         ),
+                        const SizedBox(height: 20),
+                        RatingStars(
+                          value: _rating,
+                          onValueChanged: (value) {
+                            setState(() {
+                              _rating = value;
+                            });
+                          },
+                          starCount: 5,
+                          starSize: 10,
+                          starSpacing: 2,
+                          starColor: Colors.amber,
+                          starOffColor: Colors.grey,
+                        ),
                         const SizedBox(
                           height: 15,
                         ),
                         Text(
-                          "n today’s rapidly evolving world, innovation has become the cornerstone of progress, shaping industries, societies, and the way we live our lives. From technology to healthcare, education to business, the relentless pursuit of innovation drives humanity toward solutions to some of its most pressing challenges."
-                          "Innovation is not merely about inventing new things; it is about reimagining existing systems, processes, and ideas to make them more effective, efficient, and sustainable. Take, for example, the world of technology. Over the past few decades, we have witnessed transformative changes—from the advent of personal computers to the rise of smartphones, artificial intelligence, and cloud computing. These innovations have not only revolutionized how businesses operate but also redefined communication, connectivity, and convenience in our personal lives."
-                          "Healthcare is another domain where innovation has made a profound impact. Advances in medical technology, such as robotic surgeries, telemedicine, and genetic engineering, have saved countless lives and improved the quality of life for millions. Diseases that were once considered fatal can now be managed or cured, thanks to the innovative approaches of researchers and medical professionals. The COVID-19 pandemic, for instance, underscored the importance of rapid innovation, as scientists around the globe raced to develop vaccines in record time, demonstrating the power of collaboration and technology.",
+                          widget.description,
                           style: AppFont.normalText(
                             color: Colors.white,
                             fontSize: 18,
@@ -124,27 +174,40 @@ class ProductDetails extends StatelessWidget {
                         const SizedBox(
                           height: 20,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              '80£',
-                              style: AppFont.widgetTitle(
-                                  color: AppColor.blue, fontSize: 35),
-                            ),
-                            ElevatedButton.icon(
-                              onPressed: () {},
-                              icon: const Icon(
-                                FluentIcons.shopping_bag_arrow_left_20_regular,
-                                color: AppColor.Black,
-                              ),
-                              label: Text(
-                                'Add to Cart',
+                        Flexible(
+                          flex: 1,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "\$$myprice",
                                 style: AppFont.widgetTitle(
-                                    color: AppColor.Black, fontSize: 25),
+                                    color: AppColor.blue, fontSize: 30),
                               ),
-                            )
-                          ],
+                              ElevatedButton.icon(
+                                style: ButtonStyle(
+                                  maximumSize: WidgetStatePropertyAll(
+                                    Size.lerp(
+                                      const Size(200, 50),
+                                      const Size(200, 50),
+                                      0.5,
+                                    ),
+                                  ),
+                                ),
+                                onPressed: () {},
+                                icon: const Icon(
+                                  FluentIcons
+                                      .shopping_bag_arrow_left_20_regular,
+                                  color: AppColor.Black,
+                                ),
+                                label: Text(
+                                  'Add to Cart',
+                                  style: AppFont.widgetTitle(
+                                      color: AppColor.Black, fontSize: 20),
+                                ),
+                              )
+                            ],
+                          ),
                         )
                       ],
                     ),

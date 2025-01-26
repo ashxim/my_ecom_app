@@ -5,7 +5,9 @@ import 'package:my_ecom_app/core/themes/app-color.dart';
 import 'package:my_ecom_app/core/themes/app_font.dart';
 
 class Categories extends StatelessWidget {
-  const Categories({super.key});
+  final String categoryIcon;
+  final String name;
+  const Categories({super.key, required this.categoryIcon, required this.name});
 
   @override
   Widget build(BuildContext context) {
@@ -13,15 +15,10 @@ class Categories extends StatelessWidget {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Column(
-      mainAxisSize: MainAxisSize.min, // Avoid taking unnecessary space
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(
-            top: 10,
-            left: 15,
-            right: 5,
-          ),
-          child: ClipRRect(
+        mainAxisSize: MainAxisSize.min, // Avoid taking unnecessary space
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: Stack(
               alignment: Alignment.center, // Center text inside the Stack
@@ -53,21 +50,24 @@ class Categories extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                   ),
                 ),
-                // Centered Text
-                Text(
-                  'Offers',
-                  style: AppFont.normalText().extraLarge(color: AppColor.white),
-                ),
+
+                Image.asset(categoryIcon),
               ],
             ),
           ),
-        ),
-        const SizedBox(height: 8), // Add spacing between the box and the text
-        Text(
-          'Categories',
-          style: AppFont.widgetTitle(color: AppColor.Black, fontSize: 15),
-        ),
-      ],
-    );
+
+          const SizedBox(height: 8), // Add spacing between the box and the text
+          SizedBox(
+            width:
+                screenWidth * 0.23, // Ensure text doesn't exceed the box width
+            child: Text(
+              name,
+              maxLines: 3, // Limit the text to 2 lines
+              textAlign: TextAlign.center, // Center the text horizontally
+              overflow: TextOverflow.clip, // Add ellipsis if text overflows
+              style: AppFont.widgetTitle(color: AppColor.Black, fontSize: 14),
+            ),
+          ),
+        ]);
   }
 }

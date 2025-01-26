@@ -47,10 +47,20 @@ class Wishlist extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const ProductDetails(),
+                        builder: (context) => const ProductDetails(
+                          rating: 4.5,
+                          title: 'Sample Product',
+                          thumbnail: 'assets/sample_thumbnail.png',
+                          description: 'This is a sample product description',
+                          price: 99.99,
+                          discountPercentage: 10,
+                        ),
                       ));
                 },
-                child: const HotDeals(
+                child: HotDeals(
+                  title: 'Sample Product',
+                  price: 99.99,
+                  thumbnail: 'assets/sample_thumbnail.png',
                   icon: Icons.delete_outline_rounded,
                 )),
           ),

@@ -14,7 +14,7 @@ class CartItems extends StatelessWidget {
       children: [
         Container(
           width: screenWidth * 0.9,
-          height: screenHeight * 0.15,
+          height: screenHeight * 0.14,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             // Semi-transparent blue
