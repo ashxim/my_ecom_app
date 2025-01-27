@@ -3,6 +3,8 @@ import 'dart:convert';
 
 import 'package:my_ecom_app/features/product/data/models/product_details/product_model.dart';
 
+import '../../../domain/entities/product_details_entities.dart';
+
 class ProductRemoteDataSource {
   final http.Client client;
 
@@ -46,6 +48,16 @@ class ProductRemoteDataSource {
       return ProductModel.fromJson(json.decode(response.body));
     } else {
       throw Exception('Failed to load product details');
+    }
+  }
+
+  Future<ProductModel> getProductById(String id) async {
+    final response =
+        await client.get(Uri.parse("https://dummyjson.com/products/$id"));
+    if (response.statusCode == 200) {
+      return ProductModel.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to fetch product');
     }
   }
 }

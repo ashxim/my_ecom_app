@@ -1,21 +1,28 @@
 import 'dart:ui'; // For ImageFilter
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_ecom_app/core/themes/app-color.dart';
 import 'package:my_ecom_app/core/themes/app_font.dart';
+
+import '../../Bloc/wishlist/wishlist_bloc.dart';
+import '../../Bloc/wishlist/wishlist_event.dart';
 
 class HotDeals extends StatelessWidget {
   final String thumbnail;
   final String title;
   final double price;
 
-  final IconData icon;
-  const HotDeals(
-      {super.key,
-      required this.icon,
-      required this.thumbnail,
-      required this.title,
-      required this.price});
+  final IconButton icon;
+  final int productId;
+  const HotDeals({
+    super.key,
+    required this.icon,
+    required this.thumbnail,
+    required this.title,
+    required this.price,
+    required this.productId,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -88,11 +95,12 @@ class HotDeals extends StatelessWidget {
                         ),
 
                         Flexible(
-                          flex: 1, // Adjust the flex value as needed
+                          flex: 2, // Adjust the flex value as needed
                           child: IconButton(
                             onPressed: () {},
-                            icon: const Icon(
-                              Icons.favorite_border_outlined,
+                            icon: IconButton(
+                              onPressed: () {},
+                              icon: icon,
                               color: AppColor.white,
                             ),
                           ),

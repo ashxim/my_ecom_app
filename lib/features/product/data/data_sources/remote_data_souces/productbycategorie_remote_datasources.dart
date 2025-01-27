@@ -25,8 +25,7 @@ class ProductbycategorieRemoteDatasources {
 
       return validProducts.map((json) => ProductModel.fromJson(json)).toList();
     } else {
-      throw Exception(
-          'Failed to fetch products by category: Status Code: ${response.statusCode}, Error: ${response.reasonPhrase}');
+      throw Exception(' Error: ${response.reasonPhrase}');
     }
   }
 }

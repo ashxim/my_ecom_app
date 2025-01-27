@@ -4,6 +4,8 @@ import 'package:my_ecom_app/features/product/domain/use_cases/categories/product
 import 'package:my_ecom_app/features/product/presentation/Bloc/productbycategorie/productbycategorie_bloc.dart';
 import 'package:my_ecom_app/features/product/presentation/Bloc/productbycategorie/productbycategorie_event.dart';
 import 'package:http/http.dart' as http;
+import 'package:my_ecom_app/features/product/presentation/Bloc/wishlist/wishlist_bloc.dart';
+import 'package:my_ecom_app/features/product/presentation/Bloc/wishlist/wishlist_event.dart';
 import 'package:my_ecom_app/features/product/presentation/screens/product_details.dart';
 import 'package:my_ecom_app/features/product/presentation/widgets/home%20widget/hot_deals.dart';
 import '../../../../core/themes/app-color.dart';
@@ -90,6 +92,7 @@ class _ProductDetailsState extends State<ProductByCategorie> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => ProductDetails(
+                                id: product.id,
                                 rating: product.rating,
                                 description: product.description,
                                 title: product.title,
@@ -100,10 +103,16 @@ class _ProductDetailsState extends State<ProductByCategorie> {
                           );
                         },
                         child: HotDeals(
+                          productId: product.id,
                           title: product.title,
                           price: product.price,
                           thumbnail: product.thumbnail,
-                          icon: Icons.favorite_border_outlined,
+                          icon: IconButton(
+                              onPressed: () {
+                                context.read<WishlistBloc>().add(AddToWishlist(
+                                    productId: product.id.toString()));
+                              },
+                              icon: Icon(Icons.favorite_border_outlined)),
                         ),
                       );
                     },

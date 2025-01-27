@@ -9,6 +9,8 @@ import 'package:my_ecom_app/features/product/presentation/Bloc/hot_deals/hot_dea
 import 'package:my_ecom_app/features/product/presentation/Bloc/hot_deals/hot_deals_state.dart';
 import 'package:my_ecom_app/features/product/presentation/Bloc/product/product_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_ecom_app/features/product/presentation/Bloc/wishlist/wishlist_bloc.dart';
+import 'package:my_ecom_app/features/product/presentation/Bloc/wishlist/wishlist_event.dart';
 import 'package:my_ecom_app/features/product/presentation/screens/all_products.dart';
 import 'package:my_ecom_app/features/product/presentation/screens/cart.dart';
 import 'package:my_ecom_app/features/product/presentation/screens/product_details.dart';
@@ -202,6 +204,7 @@ class MyHomePage extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => ProductDetails(
+                                      id: product.id,
                                       rating: product.rating,
                                       description: product.description,
                                       title: product.title,
@@ -212,10 +215,18 @@ class MyHomePage extends StatelessWidget {
                                 );
                               },
                               child: HotDeals(
+                                productId: product.id,
                                 title: product.title,
                                 price: product.price,
                                 thumbnail: product.thumbnail,
-                                icon: Icons.favorite_border_outlined,
+                                icon: IconButton(
+                                    onPressed: () {
+                                      context.read<WishlistBloc>().add(
+                                          AddToWishlist(
+                                              productId:
+                                                  product.id.toString()));
+                                    },
+                                    icon: Icon(Icons.favorite_border_outlined)),
                               ),
                             );
                           },

@@ -1,12 +1,27 @@
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_ecom_app/core/themes/app-color.dart';
-import 'package:my_ecom_app/core/themes/app_font.dart';
-import 'package:my_ecom_app/features/product/presentation/screens/product_details.dart';
-import 'package:my_ecom_app/features/product/presentation/widgets/home%20widget/hot_deals.dart';
+import 'package:my_ecom_app/features/product/presentation/Bloc/wishlist/wishlist_bloc.dart';
+import 'package:my_ecom_app/features/product/presentation/Bloc/wishlist/wishlist_event.dart';
+import 'package:my_ecom_app/features/product/presentation/Bloc/wishlist/wishlist_state.dart';
 
-class Wishlist extends StatelessWidget {
-  const Wishlist({super.key});
+import '../../../../core/di/di_product.dart';
+import '../../../../core/themes/app_font.dart';
+import '../widgets/home widget/hot_deals.dart';
+import 'cart.dart';
+import 'product_details.dart';
 
+class WishlistScreen extends StatefulWidget {
+  WishlistScreen({
+    super.key,
+  });
+
+  @override
+  State<WishlistScreen> createState() => _WishlistScreenState();
+}
+
+class _WishlistScreenState extends State<WishlistScreen> {
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
@@ -22,47 +37,89 @@ class Wishlist extends StatelessWidget {
             AppColor.white
           ]))),
       // Scaffold with transparent AppBar
-      Scaffold(
-        backgroundColor: Colors.transparent, // Make scaffold transparent
-        appBar: AppBar(
-          backgroundColor: Colors.transparent, // Fully transparent
-          elevation: 0, // Remove shadow
-
-          title: Center(
-            child: Text(
-              "Wishlist",
-              style: AppFont.appTitle(color: AppColor.principle),
-            ),
-          ),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: GridView.builder(
-            shrinkWrap: true,
-            itemCount: 8,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2),
-            itemBuilder: (context, index) => InkWell(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const ProductDetails(
-                          rating: 4.5,
-                          title: 'Sample Product',
-                          thumbnail: 'assets/sample_thumbnail.png',
-                          description: 'This is a sample product description',
-                          price: 99.99,
-                          discountPercentage: 10,
-                        ),
-                      ));
-                },
-                child: HotDeals(
-                  title: 'Sample Product',
-                  price: 99.99,
-                  thumbnail: 'assets/sample_thumbnail.png',
-                  icon: Icons.delete_outline_rounded,
-                )),
+      BlocProvider(
+        create: (context) => getIt<WishlistBloc>()..add(FetchWishlist()),
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+              backgroundColor: Colors.transparent, // Fully transparent
+              elevation: 0, // Remove shadow
+              title: Center(
+                child: Text(
+                  "My Wishlist",
+                  style: AppFont.appTitle(
+                    color: AppColor.principle,
+                  ),
+                ),
+              ),
+              actions: [
+                IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const CartScreen(),
+                          ));
+                    },
+                    icon: const Icon(
+                      size: 28,
+                      Icons.shopping_bag_outlined,
+                      color: AppColor.principle,
+                    ))
+              ]),
+          body: BlocBuilder<WishlistBloc, WishlistState>(
+            builder: (context, state) {
+              if (state is WishlistLoading) {
+                return Center(child: CircularProgressIndicator());
+              } else if (state is WishlistLoaded) {
+                if (state.products.isEmpty) {
+                  return Center(child: Text('No items in your wishlist.'));
+                }
+                return GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2),
+                  itemCount: state.products.length,
+                  itemBuilder: (context, index) {
+                    final product = state.products[index];
+                    return InkWell(
+                      key: ValueKey(product.id),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProductDetails(
+                              id: product.id,
+                              title: product.title,
+                              price: product.price,
+                              thumbnail: product.thumbnail,
+                              description: product.description,
+                              rating: product.rating,
+                            ),
+                          ),
+                        );
+                      },
+                      child: HotDeals(
+                        productId: product.id,
+                        title: product.title,
+                        price: product.price,
+                        thumbnail: product.thumbnail,
+                        icon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                context.read<WishlistBloc>().add(RemoveWishlist(
+                                    productId: product.id.toString()));
+                              });
+                            },
+                            icon: Icon(FluentIcons.delete_12_regular)),
+                      ),
+                    );
+                  },
+                );
+              } else if (state is WishlistError) {
+                return Center(child: Text('Error: ${state.message}'));
+              }
+              return const SizedBox.shrink();
+            },
           ),
         ),
       ),

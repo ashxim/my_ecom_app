@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_ecom_app/core/themes/app-color.dart';
+import 'package:my_ecom_app/features/product/presentation/Bloc/wishlist/wishlist_bloc.dart';
+import 'package:my_ecom_app/features/product/presentation/Bloc/wishlist/wishlist_event.dart';
 import 'package:my_ecom_app/features/product/presentation/screens/cart.dart';
 import '../../../../core/themes/app_font.dart';
 import '../Bloc/product/product_bloc.dart';
@@ -66,6 +68,7 @@ class AllProducts extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: GridView.builder(
+                  physics: AlwaysScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: state.products.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -79,6 +82,7 @@ class AllProducts extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) => ProductDetails(
+                              id: product.id,
                               rating: product.rating,
                               description: product.description,
                               title: product.title,
@@ -89,10 +93,16 @@ class AllProducts extends StatelessWidget {
                         );
                       },
                       child: HotDeals(
+                        productId: product.id,
                         title: product.title,
                         price: product.price,
                         thumbnail: product.thumbnail,
-                        icon: Icons.favorite_border_outlined,
+                        icon: IconButton(
+                            onPressed: () {
+                              context.read<WishlistBloc>().add(AddToWishlist(
+                                  productId: product.id.toString()));
+                            },
+                            icon: Icon(Icons.favorite_border_outlined)),
                       ),
                     );
                   },

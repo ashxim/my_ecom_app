@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_ecom_app/core/themes/app-color.dart';
 import 'package:my_ecom_app/core/themes/app_font.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:my_ecom_app/features/product/presentation/Bloc/wishlist/wishlist_bloc.dart';
+import 'package:my_ecom_app/features/product/presentation/Bloc/wishlist/wishlist_event.dart';
 import 'package:my_ecom_app/features/product/presentation/screens/cart.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 
@@ -12,6 +15,7 @@ class ProductDetails extends StatefulWidget {
   final double rating;
   final double price;
   final double? discountPercentage;
+  final int id;
 
   const ProductDetails({
     super.key,
@@ -21,6 +25,7 @@ class ProductDetails extends StatefulWidget {
     required this.price,
     this.discountPercentage,
     required this.rating,
+    required this.id,
   });
 
   @override
@@ -136,13 +141,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 ),
                               ),
                             ),
-                            IconButton(
-                                onPressed: () {},
-                                icon: const Icon(
-                                  size: 35,
-                                  FluentIcons.heart_circle_24_regular,
-                                  color: AppColor.Grey,
-                                ))
                           ],
                         ),
                         const SizedBox(height: 20),

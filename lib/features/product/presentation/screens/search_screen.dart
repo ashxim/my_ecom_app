@@ -97,6 +97,7 @@ class SearchScreen extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => const ProductDetails(
+                                    id: 1,
                                     rating: 4.5,
                                     title: 'Sample Product',
                                     thumbnail: 'assets/sample_thumbnail.png',

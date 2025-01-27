@@ -4,6 +4,8 @@ import 'package:my_ecom_app/features/product/presentation/Bloc/categories/catego
 import 'package:my_ecom_app/features/product/presentation/Bloc/categories/categories_event.dart';
 import 'package:my_ecom_app/features/product/presentation/Bloc/hot_deals/hot_deals_bloc.dart';
 import 'package:my_ecom_app/features/product/presentation/Bloc/productbycategorie/productbycategorie_bloc.dart';
+import 'package:my_ecom_app/features/product/presentation/Bloc/wishlist/wishlist_bloc.dart';
+import 'package:my_ecom_app/features/product/presentation/Bloc/wishlist/wishlist_event.dart';
 import 'package:my_ecom_app/features/product/presentation/widgets/btm_nav_bar.dart';
 import 'package:my_ecom_app/features/product/presentation/Bloc/product/product_bloc.dart';
 import 'package:my_ecom_app/features/product/presentation/Bloc/product/product_event.dart';
@@ -36,6 +38,9 @@ class MyApp extends StatelessWidget {
         BlocProvider<ProductByCategoryBloc>(
           create: (context) =>
               getIt<ProductByCategoryBloc>()..add(FetchProductsByCategory('')),
+        ),
+        BlocProvider<WishlistBloc>(
+          create: (context) => getIt<WishlistBloc>()..add(FetchWishlist()),
         ),
       ],
       child: MaterialApp(
