@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_ecom_app/core/themes/app-color.dart';
 import 'package:my_ecom_app/core/themes/app_font.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
-import 'package:my_ecom_app/features/product/presentation/Bloc/wishlist/wishlist_bloc.dart';
-import 'package:my_ecom_app/features/product/presentation/Bloc/wishlist/wishlist_event.dart';
 import 'package:my_ecom_app/features/product/presentation/screens/cart.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 
@@ -41,12 +38,6 @@ class _ProductDetailsState extends State<ProductDetails> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     double rating = widget.rating;
-    @override
-    void initState() {
-      super.initState();
-      rating = widget
-          .rating; // Initialize with the rating passed from the constructor
-    }
 
     return Stack(
       children: [

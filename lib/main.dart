@@ -11,14 +11,19 @@ import 'package:my_ecom_app/features/product/presentation/Bloc/wishlist/wishlist
 import 'package:my_ecom_app/features/product/presentation/Bloc/product/product_bloc.dart';
 import 'package:my_ecom_app/features/product/presentation/Bloc/product/product_event.dart';
 import 'package:my_ecom_app/core/di/di_product.dart';
-import 'package:my_ecom_app/features/product/presentation/screens/authentication/login_screen.dart';
 import 'features/product/presentation/Bloc/hot_deals/hot_deals_event.dart';
 import 'features/product/presentation/Bloc/productbycategorie/productbycategorie_event.dart';
 import 'features/product/presentation/screens/onBoarding/onboarding_screen_one.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-void main() {
+void main() async {
   setup();
-  // Initialize dependency injection
+  await Supabase.initialize(
+    url:
+        'https://jcwhuundhnqwspgqlvcm.supabase.co', // Replace with your Supabase URL
+    anonKey:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impjd2h1dW5kaG5xd3NwZ3FsdmNtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzgwNzE3NjYsImV4cCI6MjA1MzY0Nzc2Nn0.FqQPwjPtGa44ScarYO_m1VDyjGP_-S_GJpUc9AjbnA4', // Replace with your Supabase Anon Key
+  );
   runApp(const MyApp());
 }
 
@@ -55,7 +60,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: LoginScreen(),
+        home: OnboardingScreenOne(),
       ),
     );
   }

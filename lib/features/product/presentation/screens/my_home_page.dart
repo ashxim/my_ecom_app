@@ -25,7 +25,6 @@ class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
 
   Future<void> _refreshData(BuildContext context) async {
-    double screenHeight = MediaQuery.of(context).size.height;
     // Simulate refreshing data
     await Future.delayed(const Duration(seconds: 2));
 

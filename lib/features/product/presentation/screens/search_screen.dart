@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_ecom_app/core/di/di_product.dart';
 import 'package:my_ecom_app/core/themes/app-color.dart';
 import 'package:my_ecom_app/core/themes/app_font.dart';
-import 'package:my_ecom_app/features/product/data/data_sources/remote_data_souces/search_remote_datasouces.dart';
 import 'package:my_ecom_app/features/product/presentation/Bloc/search/search_bloc.dart';
 import 'package:my_ecom_app/features/product/presentation/Bloc/search/search_event.dart';
 import 'package:my_ecom_app/features/product/presentation/Bloc/search/search_state.dart';
