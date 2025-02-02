@@ -1,4 +1,3 @@
-import 'package:my_ecom_app/features/product/presentation/screens/wishlist.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class WishlistLocalDatasouces {

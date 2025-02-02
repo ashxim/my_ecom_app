@@ -59,7 +59,7 @@ class Categories extends StatelessWidget {
           const SizedBox(height: 8), // Add spacing between the box and the text
           SizedBox(
             width:
-                screenWidth * 0.23, // Ensure text doesn't exceed the box width
+                screenWidth * 0.3, // Ensure text doesn't exceed the box width
             child: Text(
               name,
               maxLines: 3, // Limit the text to 2 lines

@@ -1,12 +1,8 @@
 import 'dart:ui'; // For ImageFilter
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_ecom_app/core/themes/app-color.dart';
 import 'package:my_ecom_app/core/themes/app_font.dart';
-
-import '../../Bloc/wishlist/wishlist_bloc.dart';
-import '../../Bloc/wishlist/wishlist_event.dart';
 
 class HotDeals extends StatelessWidget {
   final String thumbnail;
@@ -46,8 +42,8 @@ class HotDeals extends StatelessWidget {
 
             // Foreground with semi-transparent color
             Container(
-              width: screenWidth * 0.4,
-              height: screenHeight * 0.6,
+              width: screenWidth * 0.5,
+              height: screenHeight * 0.9,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 color: AppColor.principle
@@ -62,7 +58,6 @@ class HotDeals extends StatelessWidget {
                     width: screenWidth * 0.3,
                     fit: BoxFit.fill,
                   ),
-                  const SizedBox(height: 10),
                   Padding(
                     padding: const EdgeInsets.all(2.0),
                     child: Row(
@@ -70,15 +65,15 @@ class HotDeals extends StatelessWidget {
                       children: [
                         // Use Flexible or Expanded for the Column
                         Flexible(
-                          flex: 3, // Adjust the flex value as needed
+                          flex: 4, // Adjust the flex value as needed
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment
                                 .start, // Align text to the start
                             children: [
                               Text(
                                 title,
-                                overflow: TextOverflow.fade,
-                                maxLines: 3,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
                                 style: AppFont.normalText().small(
                                   fontSize: 16,
                                   color: AppColor.white,

@@ -1,11 +1,12 @@
 import 'package:equatable/equatable.dart';
 import 'package:my_ecom_app/features/product/data/models/product_details/product_model.dart';
-import 'package:my_ecom_app/features/product/domain/entities/product_details_entities.dart';
 
 abstract class WishlistState extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class WishlistInitial extends WishlistState {}
 
 class WishlistLoading extends WishlistState {}
 

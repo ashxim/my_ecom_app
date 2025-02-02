@@ -1,8 +1,4 @@
-import 'package:my_ecom_app/features/product/domain/use_cases/product/Get_Products.dart';
-
-import '../../domain/entities/product_details_entities.dart';
 import '../../domain/repositories/product_repository.dart';
-import '../data_sources/local_data_souces/wishlist_local_datasouces.dart';
 import '../data_sources/remote_data_souces/product_remote_datasources.dart';
 import '../models/product_details/product_model.dart';
 

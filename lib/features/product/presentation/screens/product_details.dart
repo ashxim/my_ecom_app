@@ -40,11 +40,11 @@ class _ProductDetailsState extends State<ProductDetails> {
 
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-    double _rating = widget.rating;
+    double rating = widget.rating;
     @override
     void initState() {
       super.initState();
-      _rating = widget
+      rating = widget
           .rating; // Initialize with the rating passed from the constructor
     }
 
@@ -103,7 +103,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     borderRadius: BorderRadius.circular(20),
                     child: Image.network(
                       widget.thumbnail, // Replace with actual image URL
-                      height: screenHeight * 0.3,
+                      height: screenHeight * 0.45,
                       width: screenWidth * 0.8,
                       fit: BoxFit.cover,
                     ),
@@ -145,10 +145,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ),
                         const SizedBox(height: 20),
                         RatingStars(
-                          value: _rating,
+                          value: rating,
                           onValueChanged: (value) {
                             setState(() {
-                              _rating = value;
+                              rating = value;
                             });
                           },
                           starCount: 5,
@@ -169,18 +169,18 @@ class _ProductDetailsState extends State<ProductDetails> {
 
                           // Add more content here
                         ),
-                        const SizedBox(
-                          height: 20,
-                        ),
                         Flexible(
                           flex: 1,
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Text(
                                 "\$$myprice",
                                 style: AppFont.widgetTitle(
-                                    color: AppColor.blue, fontSize: 30),
+                                    color: AppColor.blue, fontSize: 25),
+                              ),
+                              const SizedBox(
+                                width: 5,
                               ),
                               ElevatedButton.icon(
                                 style: ButtonStyle(
@@ -194,14 +194,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 ),
                                 onPressed: () {},
                                 icon: const Icon(
-                                  FluentIcons
-                                      .shopping_bag_arrow_left_20_regular,
+                                  FluentIcons.shopping_bag_16_filled,
                                   color: AppColor.Black,
+                                  size: 20,
                                 ),
                                 label: Text(
                                   'Add to Cart',
                                   style: AppFont.widgetTitle(
-                                      color: AppColor.Black, fontSize: 20),
+                                      color: AppColor.Black, fontSize: 18),
                                 ),
                               )
                             ],

@@ -1,14 +1,21 @@
 import 'package:my_ecom_app/features/product/data/models/product_details/reviews.dart';
 import 'package:my_ecom_app/features/product/domain/entities/product_details_entities.dart';
 
-class ProductModel {
+class ProductModel extends Product {
+  @override
   final int id;
+  @override
   final String title;
+  @override
   final String thumbnail;
+  @override
   final String description;
   final String category;
+  @override
   final double price;
-  final double? discountPercentage;
+  @override
+  final double discountPercentage;
+  @override
   final double rating;
   final int? stock;
   final List<String>? tags;
@@ -18,27 +25,36 @@ class ProductModel {
   final String? warrantyInformation;
   final String? shippingInformation;
   final String? availabilityStatus;
-  final List<Review>? reviews;
+  @override
+  final List<Review> reviews;
 
-  const ProductModel({
+  ProductModel({
     required this.thumbnail,
     required this.id,
     required this.title,
     required this.description,
     required this.category,
     required this.price,
-    this.discountPercentage,
+    required this.discountPercentage,
     required this.rating,
-    this.stock,
-    this.tags,
-    this.brand,
-    this.sku,
-    this.weight,
-    this.warrantyInformation,
-    this.shippingInformation,
-    this.availabilityStatus,
-    this.reviews,
-  });
+    required this.stock,
+    required this.tags,
+    required this.brand,
+    required this.sku,
+    required this.weight,
+    required this.warrantyInformation,
+    required this.shippingInformation,
+    required this.availabilityStatus,
+    required this.reviews,
+  }) : super(
+            id: id,
+            title: title,
+            description: description,
+            price: price,
+            discountPercentage: discountPercentage,
+            rating: rating,
+            reviews: reviews,
+            thumbnail: thumbnail);
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(
@@ -58,8 +74,8 @@ class ProductModel {
       warrantyInformation: json['warrantyInformation'] as String?,
       shippingInformation: json['shippingInformation'] as String?,
       availabilityStatus: json['availabilityStatus'] as String?,
-      reviews: (json['reviews'] as List?)
-          ?.map((reviewJson) => Review.fromJson(reviewJson))
+      reviews: (json['reviews'] as List)
+          .map((reviewJson) => Review.fromJson(reviewJson))
           .toList(),
       thumbnail: json['thumbnail'] ?? '',
     );
@@ -83,7 +99,7 @@ class ProductModel {
       'warrantyInformation': warrantyInformation,
       'shippingInformation': shippingInformation,
       'availabilityStatus': availabilityStatus,
-      'reviews': reviews?.map((review) => review.toJson()).toList(),
+      'reviews': reviews.map((review) => review.toJson()).toList(),
     };
   }
 
@@ -95,8 +111,8 @@ class ProductModel {
         description: description,
         price: price,
         rating: rating,
-        discountPercentage: discountPercentage!,
-        reviews: reviews!,
+        discountPercentage: discountPercentage,
+        reviews: reviews,
         thumbnail: thumbnail);
   }
 }

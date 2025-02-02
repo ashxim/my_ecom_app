@@ -25,6 +25,7 @@ class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
 
   Future<void> _refreshData(BuildContext context) async {
+    double screenHeight = MediaQuery.of(context).size.height;
     // Simulate refreshing data
     await Future.delayed(const Duration(seconds: 2));
 
@@ -37,6 +38,7 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
     return Stack(children: [
       // Gradient background
       Container(
@@ -111,7 +113,7 @@ class MyHomePage extends StatelessWidget {
                 SizedBox(
                   // categories widget
                   width: double.maxFinite,
-                  height: 140,
+                  height: screenHeight * 0.2,
                   child: BlocBuilder<CategoriesBloc, CategoriesState>(
                       builder: (context, state) {
                     if (state is CategoriesLoading) {
@@ -145,7 +147,7 @@ class MyHomePage extends StatelessWidget {
                             );
                           });
                     } else {
-                      return Center(child: Text('Something went wrong'));
+                      return const Center(child: Text('Something went wrong'));
                     }
                   }),
                 ),
@@ -226,7 +228,8 @@ class MyHomePage extends StatelessWidget {
                                               productId:
                                                   product.id.toString()));
                                     },
-                                    icon: Icon(Icons.favorite_border_outlined)),
+                                    icon: const Icon(
+                                        Icons.favorite_border_outlined)),
                               ),
                             );
                           },
@@ -234,7 +237,8 @@ class MyHomePage extends StatelessWidget {
                       } else if (state is HotDealsError) {
                         return Center(child: Text(state.message));
                       } else {
-                        return Center(child: Text('Something went wrong'));
+                        return const Center(
+                            child: Text('Something went wrong'));
                       }
                     },
                   ),

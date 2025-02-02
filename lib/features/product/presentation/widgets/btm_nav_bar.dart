@@ -35,7 +35,7 @@ class _BtmNavBarState extends State<BtmNavBar> {
             _selectedIndex = index;
           });
         },
-        children: [
+        children: const [
           MyHomePage(),
           WishlistScreen(),
           SearchScreen(),

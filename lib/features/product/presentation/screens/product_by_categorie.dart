@@ -76,13 +76,14 @@ class _ProductDetailsState extends State<ProductByCategorie> {
           body: BlocBuilder<ProductByCategoryBloc, ProductByCategoryState>(
             builder: (context, state) {
               if (state is ProductByCategoryLoading) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               } else if (state is ProductByCategoryLoaded) {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2),
                     itemCount: state.products.length,
                     itemBuilder: (context, index) {
                       final product = state.products[index];
@@ -112,7 +113,7 @@ class _ProductDetailsState extends State<ProductByCategorie> {
                                 context.read<WishlistBloc>().add(AddToWishlist(
                                     productId: product.id.toString()));
                               },
-                              icon: Icon(Icons.favorite_border_outlined)),
+                              icon: const Icon(Icons.favorite_border_outlined)),
                         ),
                       );
                     },
@@ -121,7 +122,8 @@ class _ProductDetailsState extends State<ProductByCategorie> {
               } else if (state is ProductByCategoryError) {
                 return Center(child: Text(state.message));
               }
-              return Center(child: Text('Select a category to view products'));
+              return const Center(
+                  child: Text('Select a category to view products'));
             },
           ),
         ),

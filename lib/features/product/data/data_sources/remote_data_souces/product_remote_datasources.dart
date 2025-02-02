@@ -3,8 +3,6 @@ import 'dart:convert';
 
 import 'package:my_ecom_app/features/product/data/models/product_details/product_model.dart';
 
-import '../../../domain/entities/product_details_entities.dart';
-
 class ProductRemoteDataSource {
   final http.Client client;
 

@@ -13,7 +13,7 @@ import 'cart.dart';
 import 'product_details.dart';
 
 class WishlistScreen extends StatefulWidget {
-  WishlistScreen({
+  const WishlistScreen({
     super.key,
   });
 
@@ -37,8 +37,8 @@ class _WishlistScreenState extends State<WishlistScreen> {
             AppColor.white
           ]))),
       // Scaffold with transparent AppBar
-      BlocProvider(
-        create: (context) => getIt<WishlistBloc>()..add(FetchWishlist()),
+      BlocProvider.value(
+        value: getIt<WishlistBloc>()..add(FetchWishlist()),
         child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
@@ -70,19 +70,19 @@ class _WishlistScreenState extends State<WishlistScreen> {
           body: BlocBuilder<WishlistBloc, WishlistState>(
             builder: (context, state) {
               if (state is WishlistLoading) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               } else if (state is WishlistLoaded) {
                 if (state.products.isEmpty) {
-                  return Center(child: Text('No items in your wishlist.'));
+                  return const Center(
+                      child: Text('No items in your wishlist.'));
                 }
                 return GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2),
                   itemCount: state.products.length,
                   itemBuilder: (context, index) {
                     final product = state.products[index];
                     return InkWell(
-                      key: ValueKey(product.id),
                       onTap: () {
                         Navigator.push(
                           context,
@@ -105,12 +105,10 @@ class _WishlistScreenState extends State<WishlistScreen> {
                         thumbnail: product.thumbnail,
                         icon: IconButton(
                             onPressed: () {
-                              setState(() {
-                                context.read<WishlistBloc>().add(RemoveWishlist(
-                                    productId: product.id.toString()));
-                              });
+                              context.read<WishlistBloc>().add(RemoveWishlist(
+                                  productId: product.id.toString()));
                             },
-                            icon: Icon(FluentIcons.delete_12_regular)),
+                            icon: const Icon(FluentIcons.delete_12_regular)),
                       ),
                     );
                   },

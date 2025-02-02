@@ -4,14 +4,17 @@ import 'package:my_ecom_app/features/product/presentation/Bloc/categories/catego
 import 'package:my_ecom_app/features/product/presentation/Bloc/categories/categories_event.dart';
 import 'package:my_ecom_app/features/product/presentation/Bloc/hot_deals/hot_deals_bloc.dart';
 import 'package:my_ecom_app/features/product/presentation/Bloc/productbycategorie/productbycategorie_bloc.dart';
+import 'package:my_ecom_app/features/product/presentation/Bloc/search/search_bloc.dart';
+import 'package:my_ecom_app/features/product/presentation/Bloc/search/search_event.dart';
 import 'package:my_ecom_app/features/product/presentation/Bloc/wishlist/wishlist_bloc.dart';
 import 'package:my_ecom_app/features/product/presentation/Bloc/wishlist/wishlist_event.dart';
-import 'package:my_ecom_app/features/product/presentation/widgets/btm_nav_bar.dart';
 import 'package:my_ecom_app/features/product/presentation/Bloc/product/product_bloc.dart';
 import 'package:my_ecom_app/features/product/presentation/Bloc/product/product_event.dart';
 import 'package:my_ecom_app/core/di/di_product.dart';
+import 'package:my_ecom_app/features/product/presentation/screens/authentication/login_screen.dart';
 import 'features/product/presentation/Bloc/hot_deals/hot_deals_event.dart';
 import 'features/product/presentation/Bloc/productbycategorie/productbycategorie_event.dart';
+import 'features/product/presentation/screens/onBoarding/onboarding_screen_one.dart';
 
 void main() {
   setup();
@@ -42,6 +45,9 @@ class MyApp extends StatelessWidget {
         BlocProvider<WishlistBloc>(
           create: (context) => getIt<WishlistBloc>()..add(FetchWishlist()),
         ),
+        BlocProvider<SearchBloc>(
+            create: (context) =>
+                getIt<SearchBloc>()..add(const SearchProducts(query: 'query'))),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -49,7 +55,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const BtmNavBar(),
+        home: LoginScreen(),
       ),
     );
   }

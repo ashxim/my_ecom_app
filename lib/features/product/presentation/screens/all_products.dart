@@ -63,12 +63,12 @@ class AllProducts extends StatelessWidget {
         body: BlocBuilder<ProductBloc, ProductState>(
           builder: (context, state) {
             if (state is ProductLoading) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             } else if (state is ProductLoaded) {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: GridView.builder(
-                  physics: AlwaysScrollableScrollPhysics(),
+                  physics: const AlwaysScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: state.products.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -102,7 +102,7 @@ class AllProducts extends StatelessWidget {
                               context.read<WishlistBloc>().add(AddToWishlist(
                                   productId: product.id.toString()));
                             },
-                            icon: Icon(Icons.favorite_border_outlined)),
+                            icon: const Icon(Icons.favorite_border_outlined)),
                       ),
                     );
                   },
@@ -111,7 +111,7 @@ class AllProducts extends StatelessWidget {
             } else if (state is ProductError) {
               return Center(child: Text(state.message));
             } else {
-              return Center(child: Text('something went wrong'));
+              return const Center(child: Text('something went wrong'));
             }
           },
         ),

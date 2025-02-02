@@ -5,7 +5,16 @@ import 'package:my_ecom_app/core/themes/app-color.dart';
 import 'package:my_ecom_app/core/themes/app_font.dart';
 
 class SearchItems extends StatelessWidget {
-  const SearchItems({super.key});
+  final int id;
+  final String title;
+  final String thumbnail;
+  final double price;
+  const SearchItems(
+      {super.key,
+      required this.id,
+      required this.title,
+      required this.thumbnail,
+      required this.price});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +50,7 @@ class SearchItems extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: Image.network(
-                      "https://www.pngmart.com/files/15/Apple-iPhone-11-PNG-File.png",
+                      thumbnail,
                       height: screenHeight * 0.18,
                       width: screenWidth * 0.2,
                       fit: BoxFit.cover,
@@ -57,12 +66,13 @@ class SearchItems extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text(
-                            'Iphone 15 pro max',
+                            title,
+                            maxLines: 3,
                             style: AppFont.widgetTitle(
                                 color: AppColor.white, fontSize: 18),
                           ),
                           Text(
-                            '200£',
+                            price.toString(),
                             style: AppFont.widgetTitle(
                                 color: AppColor.blue, fontSize: 15),
                           ),

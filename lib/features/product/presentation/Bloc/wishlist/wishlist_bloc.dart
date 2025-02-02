@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../data/data_sources/local_data_souces/wishlist_local_datasouces.dart';
 import '../../../domain/repositories/product_repository.dart';
@@ -12,7 +11,7 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
 
   WishlistBloc(
       {required this.productRepository, required this.wishlistLocalData})
-      : super(WishlistLoading()) {
+      : super(WishlistInitial()) {
     on<FetchWishlist>((event, emit) async {
       try {
         final productIds = await wishlistLocalData.getWishlist();
