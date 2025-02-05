@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:my_ecom_app/core/themes/app-color.dart';
 import 'package:my_ecom_app/core/themes/app_font.dart';
+import 'package:my_ecom_app/features/product/presentation/screens/authentication/auth_service.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class UserProfileWidget extends StatelessWidget {
   const UserProfileWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final currentemail = AuthService().getUserEmail();
     return Stack(
       children: [
         // Gradient background
@@ -53,7 +56,7 @@ class UserProfileWidget extends StatelessWidget {
                 // User Name
                 const Center(
                   child: Text(
-                    "John Doe", // Replace with user's name
+                    "Ashxim", // Replace with user's name
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 24,
@@ -63,9 +66,9 @@ class UserProfileWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 // User Email
-                const Center(
+                Center(
                   child: Text(
-                    "johndoe@example.com", // Replace with user's email
+                    currentemail.toString(), // Replace with user's email
                     style: TextStyle(
                       color: Colors.white70,
                       fontSize: 16,
@@ -115,6 +118,16 @@ class UserProfileWidget extends StatelessWidget {
                       ), // Masked payment card
                     ),
                   ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 40),
+                  child: Center(
+                    child: ElevatedButton(
+                        onPressed: () {
+                          Supabase.instance.client.auth.signOut();
+                        },
+                        child: Text('Sign Out')),
+                  ),
                 ),
               ],
             ),

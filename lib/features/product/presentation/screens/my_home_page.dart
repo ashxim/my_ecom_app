@@ -92,7 +92,7 @@ class MyHomePage extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     physics: const AlwaysScrollableScrollPhysics(),
                     itemCount: 5,
-                    itemBuilder: (context, index) => const Offers(),
+                    itemBuilder: (context, index) => const Ads(),
                   ),
                 ),
                 const SizedBox(

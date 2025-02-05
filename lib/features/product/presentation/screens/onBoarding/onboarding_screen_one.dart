@@ -2,7 +2,7 @@ import 'package:concentric_transition/concentric_transition.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:my_ecom_app/core/themes/app-color.dart';
-import 'package:my_ecom_app/features/product/presentation/screens/authentication/login_screen.dart';
+import 'package:my_ecom_app/features/product/presentation/screens/authentication/auth_screen.dart';
 
 import 'card_clickshop.dart';
 
@@ -55,7 +55,7 @@ class OnboardingScreenOne extends StatelessWidget {
         onFinish: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const LoginScreen()),
+            MaterialPageRoute(builder: (context) => const AuthScreen()),
           );
         },
         nextButtonBuilder: (context) => const Icon(

@@ -11,6 +11,7 @@ import 'package:my_ecom_app/features/product/presentation/Bloc/wishlist/wishlist
 import 'package:my_ecom_app/features/product/presentation/Bloc/product/product_bloc.dart';
 import 'package:my_ecom_app/features/product/presentation/Bloc/product/product_event.dart';
 import 'package:my_ecom_app/core/di/di_product.dart';
+import 'package:my_ecom_app/features/product/presentation/screens/authentication/auth_gate.dart';
 import 'features/product/presentation/Bloc/hot_deals/hot_deals_event.dart';
 import 'features/product/presentation/Bloc/productbycategorie/productbycategorie_event.dart';
 import 'features/product/presentation/screens/onBoarding/onboarding_screen_one.dart';
@@ -60,7 +61,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: OnboardingScreenOne(),
+        home: AuthGate(),
       ),
     );
   }
