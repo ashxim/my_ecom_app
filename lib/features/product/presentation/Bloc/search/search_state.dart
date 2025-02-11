@@ -14,14 +14,14 @@ class SearchLoading extends SearchState {}
 
 class SearchLoaded extends SearchState {
   final List<Product> products;
-  SearchLoaded({required this.products});
+  const SearchLoaded({required this.products});
   @override
   List<Object> get props => [products];
 }
 
 class SearchError extends SearchState {
   final String message;
-  SearchError({required this.message});
+  const SearchError({required this.message});
   @override
   List<Object> get props => [message];
 }

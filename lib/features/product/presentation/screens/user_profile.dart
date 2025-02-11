@@ -69,7 +69,7 @@ class UserProfileWidget extends StatelessWidget {
                 Center(
                   child: Text(
                     currentemail.toString(), // Replace with user's email
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white70,
                       fontSize: 16,
                     ),
@@ -126,7 +126,7 @@ class UserProfileWidget extends StatelessWidget {
                         onPressed: () {
                           Supabase.instance.client.auth.signOut();
                         },
-                        child: Text('Sign Out')),
+                        child: const Text('Sign Out')),
                   ),
                 ),
               ],

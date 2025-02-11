@@ -11,7 +11,7 @@ class CheckoutWidget extends StatelessWidget {
     return Material(
       child: Container(
         color: AppColor.principle,
-        height: screenHeight * 0.4, // Adjust height as needed
+        height: screenHeight * 0.45, // Adjust height as needed
         child: Padding(
           padding: const EdgeInsets.all(15.0),
           child: Column(

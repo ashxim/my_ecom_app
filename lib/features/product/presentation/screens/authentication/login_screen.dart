@@ -1,10 +1,8 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:my_ecom_app/core/errors/failures.dart';
-import 'package:my_ecom_app/features/product/presentation/screens/authentication/auth_gate.dart';
 import 'package:my_ecom_app/features/product/presentation/screens/authentication/auth_service.dart';
-import 'package:my_ecom_app/features/product/presentation/widgets/btm_nav_bar.dart';
 
 class LoginScreen extends StatefulWidget {
   final VoidCallback onToggle;
@@ -50,6 +48,35 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  void signInWithGoogle() async {
+    try {
+      bool success = await authService.signInWithGoogle();
+      if (success) {
+        print('Signed in with Google successfully');
+        // Navigate to the home screen or update the UI
+      } else {
+        print('Failed to sign in with Google');
+      }
+    } catch (error) {
+      print('Error signing in with Google: $error');
+    }
+  }
+
+// Sign in with Facebook
+  void signInWithFacebook() async {
+    try {
+      bool success = await authService.signInWithFacebook();
+      if (success) {
+        print('Signed in with Facebook successfully');
+        // Navigate to the home screen or update the UI
+      } else {
+        print('Failed to sign in with Facebook');
+      }
+    } catch (error) {
+      print('Error signing in with Facebook: $error');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -58,13 +85,28 @@ class _LoginScreenState extends State<LoginScreen> {
         children: [
           const Text("Login",
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           _buildTextField("Email Address", controller: _emailController),
           _buildTextField("Password",
               isPassword: true, controller: _passwordController),
           _buildAuthButton("Sign In"),
+          SizedBox(
+            height: 10,
+          ),
+          Center(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                    onPressed: () {}, icon: Icon(FontAwesomeIcons.google)),
+                IconButton(
+                    onPressed: () {}, icon: Icon(FontAwesomeIcons.facebook))
+              ],
+            ),
+          )
         ],
       ),
     );

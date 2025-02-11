@@ -20,11 +20,11 @@ class ProductByCategoryRepositoryImpl implements ProductByCategoryRepository {
                 id: model.id,
                 title: model.title,
                 description: model.description,
-                discountPercentage: model.discountPercentage ?? 0.0,
+                discountPercentage: model.discountPercentage,
                 rating: model.rating,
                 price: model.price,
                 thumbnail: model.thumbnail,
-                reviews: model.reviews ?? [],
+                reviews: model.reviews,
               ))
           .toList();
     } catch (e) {

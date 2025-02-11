@@ -1,11 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_ecom_app/core/themes/app-color.dart';
 import 'package:my_ecom_app/core/themes/app_font.dart';
+import 'package:my_ecom_app/features/product/presentation/Bloc/cart/cart_bloc.dart';
+import 'package:my_ecom_app/features/product/presentation/Bloc/cart/cart_event.dart';
+import 'package:my_ecom_app/features/product/presentation/Bloc/cart/cart_state.dart';
 import 'package:my_ecom_app/features/product/presentation/widgets/cart%20widgets/cart_items.dart';
 import 'package:my_ecom_app/features/product/presentation/widgets/cart%20widgets/checkout_widget.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-class CartScreen extends StatelessWidget {
+class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
+
+  @override
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final userId = Supabase.instance.client.auth.currentUser?.id;
+    if (userId != null) {
+      context.read<CartBloc>().add(LoadCartEvent(userId: userId));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,15 +60,33 @@ class CartScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              // ListView inside an Expanded widget
+
               Expanded(
-                child: ListView.builder(
-                  itemCount: 20, // Example item count
-                  itemBuilder: (BuildContext context, int index) {
-                    return const CartItems();
-                  },
-                ),
+                child:
+                    BlocBuilder<CartBloc, CartState>(builder: (context, state) {
+                  if (state is CartLoading) {
+                    return const CircularProgressIndicator();
+                  }
+                  if (state is CartLoaded) {
+                    return ListView.builder(
+                        itemCount: state.cartItems.length, // Example item count
+                        itemBuilder: (BuildContext context, int index) {
+                          final item = state.cartItems[index];
+
+                          return CartItems(
+                            price: item.price,
+                            quantity: item.quantity,
+                            thumbnail: item.thumbnail,
+                            title: item.title,
+                          );
+                        });
+                  } else if (state is CartError) {
+                    return Center(child: Text('Error: ${state.message}'));
+                  }
+                  return const Center(child: Text('Cart is empty!'));
+                }),
               ),
+
               // CheckoutWidget at the bottom
               const ClipRRect(
                 borderRadius: BorderRadius.only(

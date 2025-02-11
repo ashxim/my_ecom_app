@@ -85,7 +85,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               isPassword: true, controller: _passwordController),
           _buildTextField("Confirm Password",
               isPassword: true, controller: _confirmPasswordController),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           _buildAuthButton("Sign Up"),

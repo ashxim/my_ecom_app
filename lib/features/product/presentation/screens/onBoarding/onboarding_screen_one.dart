@@ -2,7 +2,7 @@ import 'package:concentric_transition/concentric_transition.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:my_ecom_app/core/themes/app-color.dart';
-import 'package:my_ecom_app/features/product/presentation/screens/authentication/auth_screen.dart';
+import 'package:my_ecom_app/features/product/presentation/screens/authentication/auth_gate.dart';
 
 import 'card_clickshop.dart';
 
@@ -53,9 +53,9 @@ class OnboardingScreenOne extends StatelessWidget {
           return CardClickShop(data: data[index]);
         },
         onFinish: () {
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => const AuthScreen()),
+            MaterialPageRoute(builder: (context) => const AuthGate()),
           );
         },
         nextButtonBuilder: (context) => const Icon(

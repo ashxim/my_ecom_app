@@ -1,8 +1,5 @@
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:my_ecom_app/features/product/presentation/screens/authentication/auth_screen.dart';
-import 'package:my_ecom_app/features/product/presentation/screens/authentication/login_screen.dart';
-import 'package:my_ecom_app/features/product/presentation/screens/authentication/signup_screen.dart';
 import 'package:my_ecom_app/features/product/presentation/widgets/btm_nav_bar.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -23,7 +20,7 @@ class AuthGate extends StatelessWidget {
           if (session != null) {
             return const BtmNavBar();
           } else {
-            return AuthScreen();
+            return const AuthScreen();
           }
         },
       ),

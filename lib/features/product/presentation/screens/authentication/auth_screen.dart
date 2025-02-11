@@ -1,9 +1,5 @@
-import 'dart:ffi' as ffi;
-import 'dart:math';
 import 'dart:ui';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:my_ecom_app/core/themes/app-color.dart';
 import 'package:my_ecom_app/core/themes/bubble_background.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
@@ -63,7 +59,7 @@ class _LoginScreenState extends State<AuthScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          BubbleBackground(),
+          const BubbleBackground(),
           Center(
             child: ClipRect(
               // Clip the BackdropFilter to only affect the square area

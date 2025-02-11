@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_ecom_app/core/themes/app-color.dart';
 import 'package:my_ecom_app/core/themes/app_font.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:my_ecom_app/features/product/presentation/Bloc/cart/cart_bloc.dart';
+import 'package:my_ecom_app/features/product/presentation/Bloc/cart/cart_event.dart';
+import 'package:my_ecom_app/features/product/presentation/Bloc/cart/cart_state.dart';
 import 'package:my_ecom_app/features/product/presentation/screens/cart.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ProductDetails extends StatefulWidget {
   final String title;
@@ -32,6 +37,8 @@ class ProductDetails extends StatefulWidget {
 class _ProductDetailsState extends State<ProductDetails> {
   @override
   Widget build(BuildContext context) {
+    final SupabaseClient client = Supabase.instance.client;
+    final String? userId = client.auth.currentUser?.id;
     String myprice = widget.price.toString();
     String mydiscount = widget.price.toString();
 
@@ -183,7 +190,27 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     ),
                                   ),
                                 ),
-                                onPressed: () {},
+                                onPressed: () {
+                                  // Default quantity when adding to cart
+                                  if (userId != null) {
+                                    // User is authenticated, add to cart
+                                    context.read<CartBloc>().add(AddToCartEvent(
+                                          userId: userId,
+                                          productId: widget.id,
+                                          title: widget.title,
+                                          price: widget.price,
+                                          thumbnail: widget.thumbnail,
+                                          quantity: 1,
+                                        ));
+                                  } else {
+                                    // User is not authenticated, show a login prompt
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content: Text(
+                                              'Please log in to add to cart.')),
+                                    );
+                                  }
+                                },
                                 icon: const Icon(
                                   FluentIcons.shopping_bag_16_filled,
                                   color: AppColor.Black,

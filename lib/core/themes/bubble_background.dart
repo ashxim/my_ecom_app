@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class BubbleBackground extends StatelessWidget {
   final int bubbleCount;
 
-  const BubbleBackground({Key? key, this.bubbleCount = 7}) : super(key: key);
+  const BubbleBackground({super.key, this.bubbleCount = 7});
 
   List<Bubble> _generateBubbles() {
     final random = Random();

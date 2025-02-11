@@ -1,10 +1,28 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_ecom_app/core/themes/app-color.dart';
 import 'package:my_ecom_app/core/themes/app_font.dart';
+import 'package:my_ecom_app/features/product/presentation/Bloc/cart/cart_event.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+
+import '../../Bloc/cart/cart_bloc.dart';
 
 class CartItems extends StatelessWidget {
-  const CartItems({super.key});
+  final String? title;
+  final double? price;
+  final int quantity;
+  final String? thumbnail;
+  final int? id;
+
+  const CartItems({
+    super.key,
+    required this.title,
+    required this.price,
+    required this.quantity,
+    required this.thumbnail,
+    this.id,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -13,8 +31,8 @@ class CartItems extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: screenWidth * 0.9,
-          height: screenHeight * 0.14,
+          width: screenWidth * 1,
+          height: screenHeight * 0.17,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             // Semi-transparent blue
@@ -25,7 +43,7 @@ class CartItems extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Image.network(
-                  "https://www.pngmart.com/files/15/Apple-iPhone-11-PNG-File.png",
+                  thumbnail!,
                   height: screenHeight * 0.15,
                   width: screenWidth * 0.2,
                   fit: BoxFit.cover,
@@ -41,40 +59,61 @@ class CartItems extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text(
-                        'Iphone 15 pro max',
+                        title!,
                         style: AppFont.widgetTitle(
-                            color: AppColor.principle, fontSize: 18),
+                            color: AppColor.Black, fontSize: 18),
                       ),
                       Text(
-                        '200£',
+                        "\$$price",
                         style: AppFont.widgetTitle(
-                            color: AppColor.principle, fontSize: 15),
+                            color: AppColor.principle, fontSize: 18),
                       ),
                     ],
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 60),
-                child: Row(
+                padding: const EdgeInsets.only(top: 5),
+                child: Column(
                   children: [
                     IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          FluentIcons.add_circle_12_regular,
+                        onPressed: () {
+                          final SupabaseClient client =
+                              Supabase.instance.client;
+                          final String? userId = client.auth.currentUser?.id;
+                          context.read<CartBloc>().add(RemoveFromCartEvent(
+                                productId: id!,
+                                userId: userId!,
+                              ));
+                        },
+                        icon: Icon(
+                          Icons.delete_outline_sharp,
+                          color: AppColor.principle,
                           size: 30,
                         )),
-                    Text(
-                      '1',
-                      style: AppFont.normalText(
-                          color: AppColor.white, fontSize: 22),
+                    Row(
+                      children: [
+                        IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              FluentIcons.add_circle_12_regular,
+                              color: AppColor.principle,
+                              size: 30,
+                            )),
+                        Text(
+                          quantity.toString(),
+                          style: AppFont.normalText(
+                              color: AppColor.white, fontSize: 22),
+                        ),
+                        IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              FluentIcons.subtract_circle_12_regular,
+                              color: AppColor.principle,
+                              size: 30,
+                            ))
+                      ],
                     ),
-                    IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          FluentIcons.subtract_circle_12_regular,
-                          size: 30,
-                        ))
                   ],
                 ),
               )

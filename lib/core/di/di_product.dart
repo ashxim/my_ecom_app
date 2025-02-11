@@ -1,20 +1,25 @@
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:my_ecom_app/features/product/data/data_sources/local_data_souces/wishlist_local_datasouces.dart';
+import 'package:my_ecom_app/features/product/data/data_sources/remote_data_souces/cart_remote_datasources.dart';
 import 'package:my_ecom_app/features/product/data/data_sources/remote_data_souces/productbycategorie_remote_datasources.dart';
 import 'package:my_ecom_app/features/product/data/data_sources/remote_data_souces/search_remote_datasouces.dart';
+import 'package:my_ecom_app/features/product/data/repositories/CartRepositoryImpl.dart';
 import 'package:my_ecom_app/features/product/data/repositories/productbycategorie_impl.dart';
 import 'package:my_ecom_app/features/product/domain/repositories/productbycategorie_repository.dart';
 import 'package:my_ecom_app/features/product/domain/use_cases/categories/productbycategorie_usecase.dart';
 import 'package:my_ecom_app/features/product/domain/use_cases/product/GetHotDeals.dart';
 import 'package:my_ecom_app/features/product/domain/use_cases/product/GetProductDetails.dart';
+import 'package:my_ecom_app/features/product/presentation/Bloc/cart/cart_bloc.dart';
 import 'package:my_ecom_app/features/product/presentation/Bloc/hot_deals/hot_deals_bloc.dart';
 import 'package:my_ecom_app/features/product/presentation/Bloc/productbycategorie/productbycategorie_bloc.dart';
 import 'package:my_ecom_app/features/product/presentation/Bloc/search/search_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../features/product/data/data_sources/remote_data_souces/product_remote_datasources.dart';
 import '../../features/product/data/repositories/ProductRepositoryImpl.dart';
 import '../../features/product/domain/repositories/product_repository.dart';
+import '../../features/product/domain/use_cases/cart_usecases.dart';
 import '../../features/product/domain/use_cases/product/Get_Products.dart';
 import '../../features/product/presentation/Bloc/product/product_bloc.dart';
 import 'package:my_ecom_app/features/product/data/repositories/GetCategories_implements.dart';
@@ -118,4 +123,31 @@ void setup() {
 
   getIt.registerLazySingleton<SearchBloc>(
       () => SearchBloc(getIt<SearchRemoteDatasouces>()));
+
+  // cart screen
+  // Data sources
+  getIt.registerLazySingleton<CartRemoteDatasources>(
+      () => CartRemoteDatasources(Supabase.instance.client));
+
+  // Repositories
+  getIt.registerLazySingleton<CartRepository>(
+      () => CartRepositoryImpl(dataSource: getIt<CartRemoteDatasources>()));
+
+  // Use cases
+  getIt.registerLazySingleton<AddToCartUseCase>(
+      () => AddToCartUseCaseImpl(getIt<CartRepository>()));
+  getIt.registerLazySingleton<UpdateCartUseCase>(
+      () => UpdateCartUseCaseImpl(repository: getIt<CartRepository>()));
+  getIt.registerLazySingleton<RemoveFromCartUseCase>(
+      () => RemoveFromCartUseCaseImpl(repository: getIt<CartRepository>()));
+  getIt.registerLazySingleton<GetCartItemsUseCase>(
+      () => GetCartItemsUseCaseImpl(repository: getIt<CartRepository>()));
+
+  // BLoC
+  getIt.registerLazySingleton(() => CartBloc(
+        addToCartUseCase: getIt<AddToCartUseCase>(),
+        updateCartUseCase: getIt<UpdateCartUseCase>(),
+        removeFromCartUseCase: getIt<RemoveFromCartUseCase>(),
+        getCartItemsUseCase: getIt<GetCartItemsUseCase>(),
+      ));
 }
