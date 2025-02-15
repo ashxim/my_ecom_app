@@ -38,12 +38,16 @@ class CartRemoteDatasources {
     });
   }
 
-  Future<void> removeFromCart(String userId, String productId) async {
-    await client
+  Future<void> removeFromCart(String userId, int productId) async {
+    final response = await client
         .from('cart_items')
         .delete()
         .eq('user_id', userId)
-        .eq('product_id', productId);
+        .eq('product_id', productId)
+        .select();
+    print('User ID from auth: $userId');
+    print('Product ID from the cart item: $productId');
+    print('Deletion response: $response');
   }
 
   Future<void> updateCart(String userId, int productId, int quantity) async {
@@ -57,8 +61,10 @@ class CartRemoteDatasources {
   Future<List<CartEntities>> getCartItems(String userId) async {
     print("Fetching cart items for user: $userId");
 
-    final response =
-        await client.from('cart_items').select().eq('user_id', userId);
+    final response = await client
+        .from('cart_items')
+        .select('*, products(*)')
+        .eq('user_id', userId);
 
     print("Fetched cart items response: $response"); // <-- Add this line
 

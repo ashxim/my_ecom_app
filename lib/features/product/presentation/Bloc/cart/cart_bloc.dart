@@ -1,9 +1,5 @@
-import 'dart:math';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:my_ecom_app/features/product/domain/use_cases/cart_usecases.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'cart_event.dart';
 import 'cart_state.dart';
@@ -68,7 +64,14 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   Future<void> _onRemoveFromCart(
       RemoveFromCartEvent event, Emitter<CartState> emit) async {
-    await removeFromCartUseCase(event.userId, event.productId.toString());
-    add(LoadCartEvent(userId: event.userId));
+    try {
+      await removeFromCartUseCase(event.userId, event.productId);
+      print('Item removed successfully');
+      add(LoadCartEvent(
+          userId: event.userId)); // Reload the cart after removing the item
+    } catch (error) {
+      print('Error removing item from cart: $error');
+      emit(CartError(message: 'Failed to remove item from cart'));
+    }
   }
 }

@@ -139,7 +139,7 @@ void setup() {
   getIt.registerLazySingleton<UpdateCartUseCase>(
       () => UpdateCartUseCaseImpl(repository: getIt<CartRepository>()));
   getIt.registerLazySingleton<RemoveFromCartUseCase>(
-      () => RemoveFromCartUseCaseImpl(repository: getIt<CartRepository>()));
+      () => RemoveFromCartUseCaseImpl(getIt<CartRepository>()));
   getIt.registerLazySingleton<GetCartItemsUseCase>(
       () => GetCartItemsUseCaseImpl(repository: getIt<CartRepository>()));
 

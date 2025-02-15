@@ -36,16 +36,16 @@ class UpdateCartUseCaseImpl implements UpdateCartUseCase {
 }
 
 abstract class RemoveFromCartUseCase {
-  Future<void> call(String userId, String productId);
+  Future<void> call(String userId, int productId);
 }
 
 class RemoveFromCartUseCaseImpl implements RemoveFromCartUseCase {
   final CartRepository repository;
 
-  RemoveFromCartUseCaseImpl({required this.repository});
+  RemoveFromCartUseCaseImpl(this.repository);
 
   @override
-  Future<void> call(String userId, String productId) {
+  Future<void> call(String userId, int productId) {
     return repository.removeFromCart(userId, productId);
   }
 }

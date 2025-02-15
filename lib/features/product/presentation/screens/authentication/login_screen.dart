@@ -92,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
           _buildTextField("Password",
               isPassword: true, controller: _passwordController),
           _buildAuthButton("Sign In"),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Center(
@@ -101,9 +101,11 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 IconButton(
-                    onPressed: () {}, icon: Icon(FontAwesomeIcons.google)),
+                    onPressed: () {},
+                    icon: const Icon(FontAwesomeIcons.google)),
                 IconButton(
-                    onPressed: () {}, icon: Icon(FontAwesomeIcons.facebook))
+                    onPressed: () {},
+                    icon: const Icon(FontAwesomeIcons.facebook))
               ],
             ),
           )

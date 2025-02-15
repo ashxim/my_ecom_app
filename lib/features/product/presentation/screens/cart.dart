@@ -17,6 +17,7 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     final userId = Supabase.instance.client.auth.currentUser?.id;
@@ -27,11 +28,13 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final double price;
+    final double discountPercentage;
+    final int quantity;
     return Scaffold(
-      backgroundColor: Colors.transparent, // Make scaffold transparent
+        backgroundColor: Colors.transparent, // Make scaffold transparent
 
-      body: Stack(
-        children: [
+        body: Stack(children: [
           // Gradient background
           Container(
             decoration: const BoxDecoration(
@@ -74,6 +77,9 @@ class _CartScreenState extends State<CartScreen> {
                           final item = state.cartItems[index];
 
                           return CartItems(
+                            discountPercentage: item.discountPercentage,
+                            productId: item.productId,
+                            id: item.id,
                             price: item.price,
                             quantity: item.quantity,
                             thumbnail: item.thumbnail,
@@ -88,17 +94,33 @@ class _CartScreenState extends State<CartScreen> {
               ),
 
               // CheckoutWidget at the bottom
-              const ClipRRect(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
-                ),
-                child: CheckoutWidget(),
-              ),
+              BlocBuilder<CartBloc, CartState>(builder: (context, state) {
+                double subtotal = 0.0;
+                int totalQuantity = 0;
+                // For this example, let’s assume a fixed discount of 10%
+                double discountPercentage = 10.0;
+
+                if (state is CartLoaded) {
+                  for (var item in state.cartItems) {
+                    subtotal += (item.price ?? 0.0) * item.quantity;
+                    totalQuantity += item.quantity;
+                    discountPercentage += item.discountPercentage;
+                  }
+                }
+                return ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                  child: CheckoutWidget(
+                    price: subtotal,
+                    discountPercentage: discountPercentage,
+                    quantity: totalQuantity,
+                  ),
+                );
+              })
             ],
           ),
-        ],
-      ),
-    );
+        ]));
   }
 }

@@ -1,13 +1,12 @@
 import 'package:my_ecom_app/features/product/data/data_sources/remote_data_souces/cart_remote_datasources.dart';
 import 'package:my_ecom_app/features/product/domain/entities/cart_entities.dart';
-import 'package:my_ecom_app/features/product/domain/repositories/cart_repository.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class CartRepository {
   Future<void> addToCart(String userId, int productId, String title,
       double price, String thumbnail, int quantity);
   Future<void> updateCart(String userId, int productId, int quantity);
-  Future<void> removeFromCart(String userId, String productId);
+  Future<void> removeFromCart(String userId, int productId);
   Future<List<CartEntities>> getCartItems(String userId);
 }
 
@@ -29,7 +28,7 @@ class CartRepositoryImpl implements CartRepository {
   }
 
   @override
-  Future<void> removeFromCart(String userId, String productId) {
+  Future<void> removeFromCart(String userId, int productId) {
     return dataSource.removeFromCart(userId, productId);
   }
 

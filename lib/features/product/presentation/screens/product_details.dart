@@ -5,10 +5,12 @@ import 'package:my_ecom_app/core/themes/app_font.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:my_ecom_app/features/product/presentation/Bloc/cart/cart_bloc.dart';
 import 'package:my_ecom_app/features/product/presentation/Bloc/cart/cart_event.dart';
-import 'package:my_ecom_app/features/product/presentation/Bloc/cart/cart_state.dart';
 import 'package:my_ecom_app/features/product/presentation/screens/cart.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter_add_to_cart_button/flutter_add_to_cart_button.dart';
+
+import '../Bloc/cart/cart_state.dart';
 
 class ProductDetails extends StatefulWidget {
   final String title;
@@ -35,6 +37,7 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
+  AddToCartButtonStateId stateId = AddToCartButtonStateId.idle;
   @override
   Widget build(BuildContext context) {
     final SupabaseClient client = Supabase.instance.client;
@@ -168,63 +171,89 @@ class _ProductDetailsState extends State<ProductDetails> {
                           // Add more content here
                         ),
                         Flexible(
-                          flex: 1,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Text(
-                                "\$$myprice",
-                                style: AppFont.widgetTitle(
-                                    color: AppColor.blue, fontSize: 25),
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              ElevatedButton.icon(
-                                style: ButtonStyle(
-                                  maximumSize: WidgetStatePropertyAll(
-                                    Size.lerp(
-                                      const Size(200, 50),
-                                      const Size(200, 50),
-                                      0.5,
-                                    ),
-                                  ),
-                                ),
-                                onPressed: () {
-                                  // Default quantity when adding to cart
-                                  if (userId != null) {
-                                    // User is authenticated, add to cart
-                                    context.read<CartBloc>().add(AddToCartEvent(
-                                          userId: userId,
-                                          productId: widget.id,
-                                          title: widget.title,
-                                          price: widget.price,
-                                          thumbnail: widget.thumbnail,
-                                          quantity: 1,
-                                        ));
-                                  } else {
-                                    // User is not authenticated, show a login prompt
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                          content: Text(
-                                              'Please log in to add to cart.')),
-                                    );
-                                  }
-                                },
-                                icon: const Icon(
-                                  FluentIcons.shopping_bag_16_filled,
-                                  color: AppColor.Black,
-                                  size: 20,
-                                ),
-                                label: Text(
-                                  'Add to Cart',
+                            flex: 3,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Text(
+                                  "\$$myprice",
                                   style: AppFont.widgetTitle(
-                                      color: AppColor.Black, fontSize: 18),
+                                      color: AppColor.blue, fontSize: 25),
                                 ),
-                              )
-                            ],
-                          ),
-                        )
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                SizedBox(
+                                    width: 180,
+                                    height: 50,
+                                    child: ElevatedButton.icon(
+                                      style: ButtonStyle(
+                                        maximumSize: WidgetStatePropertyAll(
+                                          const Size(200, 50),
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        if (userId != null) {
+                                          // Retrieve the current cart state from the CartBloc.
+                                          final cartState =
+                                              context.read<CartBloc>().state;
+                                          bool itemExists = false;
+
+                                          // Assuming your CartBloc state has a 'CartLoaded' state with an 'items' list.
+                                          if (cartState is CartLoaded) {
+                                            itemExists = cartState.cartItems
+                                                .any((item) =>
+                                                    item.productId ==
+                                                    widget.id);
+                                          }
+
+                                          if (!itemExists) {
+                                            // If the item isn't already in the cart, add it.
+                                            context
+                                                .read<CartBloc>()
+                                                .add(AddToCartEvent(
+                                                  userId: userId,
+                                                  productId: widget.id,
+                                                  title: widget.title,
+                                                  price: widget.price,
+                                                  thumbnail: widget.thumbnail,
+                                                  quantity: 1,
+                                                ));
+                                          } else {
+                                            // Optionally update the quantity or show a notification.
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              const SnackBar(
+                                                content: Text(
+                                                    'Item is already in the cart.'),
+                                              ),
+                                            );
+                                          }
+                                        } else {
+                                          // User is not authenticated.
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            const SnackBar(
+                                              content: Text(
+                                                  'Please log in to add to cart.'),
+                                            ),
+                                          );
+                                        }
+                                      },
+                                      icon: const Icon(
+                                        FluentIcons.shopping_bag_16_filled,
+                                        color: AppColor.Black,
+                                        size: 20,
+                                      ),
+                                      label: Text(
+                                        'Add to Cart',
+                                        style: AppFont.widgetTitle(
+                                            color: AppColor.Black,
+                                            fontSize: 18),
+                                      ),
+                                    ))
+                              ],
+                            ))
                       ],
                     ),
                   ),

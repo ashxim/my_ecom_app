@@ -16,7 +16,7 @@ class CartRepository {
     return dataSource.updateCart(userId, productId, quantity);
   }
 
-  Future<void> removeFromCart(String userId, String productId) {
+  Future<void> removeFromCart(String userId, int productId) {
     return dataSource.removeFromCart(userId, productId);
   }
 

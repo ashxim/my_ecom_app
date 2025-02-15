@@ -28,7 +28,8 @@ class UpdateCartEvent extends CartEvent {
   final int productId;
   final int quantity;
 
-  UpdateCartEvent(this.userId, this.productId, this.quantity);
+  UpdateCartEvent(
+      {required this.userId, required this.productId, required this.quantity});
 }
 
 class RemoveFromCartEvent extends CartEvent {

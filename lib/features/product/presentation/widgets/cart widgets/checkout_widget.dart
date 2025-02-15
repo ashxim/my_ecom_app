@@ -1,12 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_ecom_app/core/themes/app-color.dart';
 import 'package:flutter_swipe_button/flutter_swipe_button.dart';
+import 'package:my_ecom_app/features/product/presentation/widgets/cart%20widgets/cart_items.dart';
 
-class CheckoutWidget extends StatelessWidget {
-  const CheckoutWidget({super.key});
+import '../../Bloc/cart/cart_bloc.dart';
+import '../../Bloc/cart/cart_event.dart';
+
+class CheckoutWidget extends StatefulWidget {
+  final double price;
+  final double? discountPercentage;
+  final int quantity;
+  const CheckoutWidget(
+      {super.key,
+      required this.price,
+      this.discountPercentage,
+      required this.quantity});
 
   @override
+  State<CheckoutWidget> createState() => _CheckoutWidgetState();
+}
+
+class _CheckoutWidgetState extends State<CheckoutWidget> {
+  @override
   Widget build(BuildContext context) {
+    double subtotal = widget.price;
+    double discountFraction = (widget.discountPercentage ?? 0) / 100;
+    double discountAmount = subtotal * discountFraction;
+    double total = subtotal - discountAmount;
     double screenHeight = MediaQuery.of(context).size.height;
     return Material(
       child: Container(
@@ -62,7 +83,7 @@ class CheckoutWidget extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               // Price breakdown
-              const Expanded(
+              Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -77,7 +98,7 @@ class CheckoutWidget extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "\$6119.99",
+                          "\$${subtotal.toStringAsFixed(2)}",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16,
@@ -97,7 +118,7 @@ class CheckoutWidget extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "\$0",
+                          'Free',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16,
@@ -117,7 +138,7 @@ class CheckoutWidget extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "30%",
+                          "${(widget.discountPercentage ?? 0).toStringAsFixed(0)}%",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16,
@@ -137,7 +158,7 @@ class CheckoutWidget extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "\$4,283.99",
+                          "\$${total.toStringAsFixed(2)}",
                           style: TextStyle(
                             color: Color(0xFF007AFF),
                             fontSize: 18,
