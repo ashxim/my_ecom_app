@@ -27,8 +27,10 @@ class ProductModel extends Product {
   final String? availabilityStatus;
   @override
   final List<Review> reviews;
+  final List<String> images;
 
   ProductModel({
+    required this.images,
     required this.thumbnail,
     required this.id,
     required this.title,
@@ -47,6 +49,7 @@ class ProductModel extends Product {
     required this.availabilityStatus,
     required this.reviews,
   }) : super(
+            images: images,
             id: id,
             title: title,
             description: description,
@@ -78,6 +81,9 @@ class ProductModel extends Product {
           .map((reviewJson) => Review.fromJson(reviewJson))
           .toList(),
       thumbnail: json['thumbnail'] ?? '',
+      images: (json['images'] as List)
+          .map((imageJson) => imageJson as String)
+          .toList(),
     );
   }
 
@@ -106,6 +112,7 @@ class ProductModel extends Product {
   // Add this method to convert ProductModel to Product entity
   Product toEntity() {
     return Product(
+        images: images,
         id: id,
         title: title,
         description: description,

@@ -39,7 +39,7 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
     on<RemoveWishlist>((event, emit) async {
       try {
         // Remove the product ID from local storage
-        await wishlistLocalData.removeFromWishlist(event.productId);
+        await wishlistLocalData.removeFromWishlist(event.productId as int);
         print('Removed product ID: ${event.productId}');
         // Fetch the updated list of product IDs
         final productIds = await wishlistLocalData.getWishlist();

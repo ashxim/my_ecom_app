@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_ecom_app/core/themes/app-color.dart';
 import 'package:flutter_swipe_button/flutter_swipe_button.dart';
+import 'package:my_ecom_app/features/product/presentation/screens/cart%20&%20payment/payment%20screen.dart';
 import 'package:my_ecom_app/features/product/presentation/widgets/cart%20widgets/cart_items.dart';
 
 import '../../Bloc/cart/cart_bloc.dart';
@@ -180,8 +181,19 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                   ),
                   activeTrackColor: const Color(0xFF007AFF),
                   onSwipe: () {
-                    // Action to perform after swipe
-                    print("Checkout Swiped!");
+                    final double total = widget.price -
+                        (widget.price *
+                            ((widget.discountPercentage ?? 0) / 100));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PaymentPage(
+                                  subtotal: widget.price,
+                                  discountPercentage:
+                                      widget.discountPercentage ?? 0,
+                                  total: total,
+                                  totalQuantity: widget.quantity,
+                                )));
                   },
                   child: ElevatedButton.icon(
                     onPressed: () {},

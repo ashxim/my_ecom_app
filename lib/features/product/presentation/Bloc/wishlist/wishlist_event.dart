@@ -10,7 +10,7 @@ abstract class WishlistEvent extends Equatable {
 class FetchWishlist extends WishlistEvent {}
 
 class AddToWishlist extends WishlistEvent {
-  final String productId;
+  final int productId;
 
   const AddToWishlist({required this.productId});
 

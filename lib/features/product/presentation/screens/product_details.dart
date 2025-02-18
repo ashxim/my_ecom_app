@@ -1,15 +1,18 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 import 'package:my_ecom_app/core/themes/app-color.dart';
 import 'package:my_ecom_app/core/themes/app_font.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:my_ecom_app/features/product/presentation/Bloc/cart/cart_bloc.dart';
 import 'package:my_ecom_app/features/product/presentation/Bloc/cart/cart_event.dart';
-import 'package:my_ecom_app/features/product/presentation/screens/cart.dart';
+import 'package:my_ecom_app/features/product/presentation/screens/cart%20&%20payment/cart.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_add_to_cart_button/flutter_add_to_cart_button.dart';
-
+import 'package:dots_indicator/dots_indicator.dart';
 import '../Bloc/cart/cart_state.dart';
 
 class ProductDetails extends StatefulWidget {
@@ -20,9 +23,11 @@ class ProductDetails extends StatefulWidget {
   final double price;
   final double? discountPercentage;
   final int id;
+  List<String> images;
 
-  const ProductDetails({
+  ProductDetails({
     super.key,
+    required this.images,
     required this.title,
     required this.thumbnail,
     required this.description,
@@ -48,6 +53,27 @@ class _ProductDetailsState extends State<ProductDetails> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     double rating = widget.rating;
+    late PageController _pageController = PageController();
+
+    double _currentPage = 0;
+
+    @override
+    void initState() {
+      super.initState();
+      _pageController = PageController();
+      // Add a listener to update _currentPage continuously.
+      _pageController.addListener(() {
+        setState(() {
+          _currentPage = _pageController.page ?? 0.0;
+        });
+      });
+    }
+
+    @override
+    void dispose() {
+      _pageController.dispose();
+      super.dispose();
+    }
 
     return Stack(
       children: [
@@ -86,12 +112,52 @@ class _ProductDetailsState extends State<ProductDetails> {
                         builder: (context) => const CartScreen(),
                       ));
                 },
-                icon: const Icon(
-                  size: 28,
-                  Icons.shopping_bag_outlined,
-                  color: AppColor.principle,
+                icon: BlocBuilder<CartBloc, CartState>(
+                  builder: (context, state) {
+                    if (state is CartLoaded) {
+                      // Access the cart quantity from the CartUpdated state
+                      return Stack(
+                        children: [
+                          Icon(
+                            Icons.shopping_bag_outlined,
+                            color: Colors.black,
+                            size: 25,
+                          ),
+                          if (state.cartItems.isNotEmpty)
+                            Positioned(
+                                top: 0,
+                                left: 0,
+                                child: Container(
+                                    height: 25,
+                                    width: 12,
+                                    padding: const EdgeInsets.all(2.0),
+                                    decoration: const BoxDecoration(
+                                      color: Colors.red,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Text(
+                                        '${state.cartItems.length}', // Display cart item count
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.bold,
+                                        )))),
+                        ],
+                      );
+                    } else {
+                      // Default behavior if not in CartUpdated state
+                      return const IconButton(
+                        icon: Icon(
+                          Icons.shopping_bag_outlined,
+                          color: Colors.black,
+                          size: 25,
+                        ),
+                        onPressed: null, // Disable icon if there's no cart data
+                      );
+                    }
+                  },
                 ),
-              ),
+              )
             ],
           ),
           body: SingleChildScrollView(
@@ -102,11 +168,47 @@ class _ProductDetailsState extends State<ProductDetails> {
                   padding: const EdgeInsets.symmetric(vertical: 20.0),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
-                    child: Image.network(
-                      widget.thumbnail, // Replace with actual image URL
+                    child: SizedBox(
                       height: screenHeight * 0.45,
-                      width: screenWidth * 0.8,
-                      fit: BoxFit.cover,
+                      child: PageView.builder(
+                        allowImplicitScrolling: true,
+                        scrollDirection: Axis.horizontal,
+                        controller: _pageController,
+                        itemCount: widget.images.length,
+                        itemBuilder: (context, index) {
+                          return CachedNetworkImage(
+                            imageUrl: widget.images[index],
+                            placeholder: (context, url) => const Center(
+                              child: Padding(
+                                padding: EdgeInsets.all(60.0),
+                                child: LoadingIndicator(
+                                  indicatorType: Indicator.ballRotateChase,
+                                  colors: const [AppColor.principle],
+                                  strokeWidth: 0.2,
+                                ),
+                              ),
+                            ),
+                            errorWidget: (context, url, error) => const Center(
+                              child: Icon(Icons.error),
+                            ),
+                            fit: BoxFit.cover,
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+                DotsIndicator(
+                  animate: true,
+                  dotsCount: widget.images.length,
+                  position: _currentPage,
+                  decorator: DotsDecorator(
+                    activeColor: AppColor.Black,
+                    color: AppColor.Grey,
+                    size: const Size.square(9.0),
+                    activeSize: const Size(18.0, 9.0),
+                    activeShape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5.0),
                     ),
                   ),
                 ),

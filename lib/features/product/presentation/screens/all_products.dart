@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_ecom_app/core/themes/app-color.dart';
 import 'package:my_ecom_app/features/product/presentation/Bloc/wishlist/wishlist_bloc.dart';
 import 'package:my_ecom_app/features/product/presentation/Bloc/wishlist/wishlist_event.dart';
-import 'package:my_ecom_app/features/product/presentation/screens/cart.dart';
+import 'package:my_ecom_app/features/product/presentation/screens/cart%20&%20payment/cart.dart';
 import '../../../../core/themes/app_font.dart';
 import '../Bloc/product/product_bloc.dart';
 import '../Bloc/product/product_state.dart';
@@ -82,6 +82,7 @@ class AllProducts extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) => ProductDetails(
+                              images: product.images,
                               id: product.id,
                               rating: product.rating,
                               description: product.description,
@@ -99,8 +100,9 @@ class AllProducts extends StatelessWidget {
                         thumbnail: product.thumbnail,
                         icon: IconButton(
                             onPressed: () {
-                              context.read<WishlistBloc>().add(AddToWishlist(
-                                  productId: product.id.toString()));
+                              context
+                                  .read<WishlistBloc>()
+                                  .add(AddToWishlist(productId: product.id));
                             },
                             icon: const Icon(Icons.favorite_border_outlined)),
                       ),

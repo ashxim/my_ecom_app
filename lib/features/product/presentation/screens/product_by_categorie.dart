@@ -93,6 +93,7 @@ class _ProductDetailsState extends State<ProductByCategorie> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => ProductDetails(
+                                images: product.images,
                                 id: product.id,
                                 rating: product.rating,
                                 description: product.description,
@@ -110,8 +111,9 @@ class _ProductDetailsState extends State<ProductByCategorie> {
                           thumbnail: product.thumbnail,
                           icon: IconButton(
                               onPressed: () {
-                                context.read<WishlistBloc>().add(AddToWishlist(
-                                    productId: product.id.toString()));
+                                context
+                                    .read<WishlistBloc>()
+                                    .add(AddToWishlist(productId: product.id));
                               },
                               icon: const Icon(Icons.favorite_border_outlined)),
                         ),

@@ -9,8 +9,10 @@ class Product {
   final double discountPercentage;
   final double rating;
   final List<Review> reviews;
+  final List<String> images;
 
   Product({
+    required this.images,
     required this.id,
     required this.title,
     required this.description,

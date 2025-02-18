@@ -17,6 +17,7 @@ class ProductByCategoryRepositoryImpl implements ProductByCategoryRepository {
       // Convert ProductModel to Product (Entity)
       return productModels
           .map((model) => Product(
+                images: model.images,
                 id: model.id,
                 title: model.title,
                 description: model.description,

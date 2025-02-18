@@ -9,7 +9,7 @@ import 'package:my_ecom_app/features/product/presentation/Bloc/wishlist/wishlist
 import '../../../../core/di/di_product.dart';
 import '../../../../core/themes/app_font.dart';
 import '../widgets/home widget/hot_deals.dart';
-import 'cart.dart';
+import 'cart & payment/cart.dart';
 import 'product_details.dart';
 
 class WishlistScreen extends StatefulWidget {
@@ -88,6 +88,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => ProductDetails(
+                              images: product.images,
                               id: product.id,
                               title: product.title,
                               price: product.price,

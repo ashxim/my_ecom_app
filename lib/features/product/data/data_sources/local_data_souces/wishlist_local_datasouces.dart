@@ -9,16 +9,16 @@ class WishlistLocalDatasouces {
     return prefs.getStringList('wishlist') ?? [];
   }
 
-  Future<void> addToWishlist(String productId) async {
+  Future<void> addToWishlist(int productId) async {
     final prefs = await prefsFuture;
     final List<String> wishlist = prefs.getStringList('wishlist') ?? [];
-    if (!wishlist.contains(productId)) {
-      wishlist.add(productId);
+    if (wishlist.contains(productId)) {
+      wishlist.add(productId as String);
       await prefs.setStringList('wishlist', wishlist);
     }
   }
 
-  Future<void> removeFromWishlist(String productId) async {
+  Future<void> removeFromWishlist(int productId) async {
     final prefs = await prefsFuture;
     final List<String> wishlist = prefs.getStringList('wishlist') ?? [];
     wishlist.remove(productId);

@@ -58,6 +58,10 @@ dependencies:
   supabase_flutter: ^2.8.3
   awesome_snackbar_content: ^0.1.5
   flutter_add_to_cart_button: ^1.2.0
+  dots_indicator: ^4.0.0
+  page_view_dot_indicator: ^2.3.0
+  shimmer: ^3.0.0
+  loading_indicator: ^3.1.1
 
 dev_dependencies:
   flutter_test:

@@ -185,6 +185,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.11"
+  dots_indicator:
+    dependency: "direct main"
+    description:
+      name: dots_indicator
+      sha256: ad9d452a132016ee7732ac9e49ead015f96e674dbffc4b51789db2783fdbc505
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.0"
   draggable_home:
     dependency: "direct main"
     description:
@@ -453,6 +461,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.0"
+  loading_indicator:
+    dependency: "direct main"
+    description:
+      name: loading_indicator
+      sha256: a101ffb2aa3e646137d7810bfa90b50525dd3f72c01235b6df7491cf6af6f284
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.1"
   logger:
     dependency: "direct main"
     description:
@@ -533,6 +549,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
+  page_view_dot_indicator:
+    dependency: "direct main"
+    description:
+      name: page_view_dot_indicator
+      sha256: "32d73b9de221339a371a229f547eb9cbb6f8114b8770e76a104fb4c30e39cf22"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.0"
   path:
     dependency: transitive
     description:
@@ -725,6 +749,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.4.1"
+  shimmer:
+    dependency: "direct main"
+    description:
+      name: shimmer
+      sha256: "5f88c883a22e9f9f299e5ba0e4f7e6054857224976a5d9f839d4ebdc94a14ac9"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   sky_engine:
     dependency: transitive
     description: flutter
