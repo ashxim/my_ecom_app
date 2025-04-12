@@ -1,5 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_ecom_app/core/themes/app-color.dart';
 import 'package:my_ecom_app/core/themes/app_font.dart';
 import 'package:my_ecom_app/features/product/presentation/Bloc/cart/cart_bloc.dart';
@@ -10,7 +10,6 @@ import 'package:my_ecom_app/features/product/presentation/Bloc/categories/catego
 import 'package:my_ecom_app/features/product/presentation/Bloc/hot_deals/hot_deals_bloc.dart';
 import 'package:my_ecom_app/features/product/presentation/Bloc/hot_deals/hot_deals_event.dart';
 import 'package:my_ecom_app/features/product/presentation/Bloc/hot_deals/hot_deals_state.dart';
-import 'package:my_ecom_app/features/product/presentation/Bloc/product/product_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_ecom_app/features/product/presentation/Bloc/wishlist/wishlist_bloc.dart';
 import 'package:my_ecom_app/features/product/presentation/Bloc/wishlist/wishlist_event.dart';
@@ -262,7 +261,7 @@ class MyHomePage extends StatelessWidget {
                         ),
                         itemBuilder: (context, index) {
                           final product = state.hotDeals[index];
-                          return InkWell(
+                          return GestureDetector(
                             onTap: () {
                               Navigator.push(
                                 context,
@@ -285,12 +284,15 @@ class MyHomePage extends StatelessWidget {
                               price: product.price,
                               thumbnail: product.thumbnail,
                               icon: IconButton(
-                                  onPressed: () {
-                                    context.read<WishlistBloc>().add(
-                                        AddToWishlist(productId: product.id));
-                                  },
-                                  icon: const Icon(
-                                      Icons.favorite_border_outlined)),
+                                onPressed: () {
+                                  context.read<WishlistBloc>().add(
+                                      AddToWishlist(
+                                          productId: product.id,
+                                          images: product.images));
+                                },
+                                icon:
+                                    const Icon(Icons.favorite_border_outlined),
+                              ),
                             ),
                           );
                         },

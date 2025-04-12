@@ -34,4 +34,9 @@ class AuthService {
     final user = Session?.user;
     return user?.email;
   }
+
+  String? getUserName() {
+    // Replace with your logic to fetch the user's name
+    return "Sample User";
+  }
 }

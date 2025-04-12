@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_ecom_app/core/themes/app-color.dart';
 import 'package:flutter_swipe_button/flutter_swipe_button.dart';
 import 'package:my_ecom_app/features/product/presentation/screens/cart%20&%20payment/payment%20screen.dart';
-import 'package:my_ecom_app/features/product/presentation/widgets/cart%20widgets/cart_items.dart';
-
-import '../../Bloc/cart/cart_bloc.dart';
-import '../../Bloc/cart/cart_event.dart';
 
 class CheckoutWidget extends StatefulWidget {
   final double price;
@@ -174,6 +169,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
 
               Center(
                 child: SwipeButton.expand(
+                  duration: const Duration(milliseconds: 800),
                   width: 150,
                   thumb: const Icon(
                     Icons.double_arrow_rounded,
@@ -181,19 +177,27 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                   ),
                   activeTrackColor: const Color(0xFF007AFF),
                   onSwipe: () {
-                    final double total = widget.price -
-                        (widget.price *
-                            ((widget.discountPercentage ?? 0) / 100));
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => PaymentPage(
-                                  subtotal: widget.price,
-                                  discountPercentage:
-                                      widget.discountPercentage ?? 0,
-                                  total: total,
-                                  totalQuantity: widget.quantity,
-                                )));
+                    if (widget.price > 0) {
+                      final double total = widget.price -
+                          (widget.price *
+                              ((widget.discountPercentage ?? 0) / 100));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PaymentPage(
+                                    subtotal: widget.price,
+                                    discountPercentage:
+                                        widget.discountPercentage ?? 0,
+                                    total: total,
+                                    totalQuantity: widget.quantity,
+                                  )));
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Please add items to your cart"),
+                        ),
+                      );
+                    }
                   },
                   child: ElevatedButton.icon(
                     onPressed: () {},

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_ecom_app/core/themes/app-color.dart';
 import 'package:my_ecom_app/core/themes/app_font.dart';
-import 'package:my_ecom_app/features/product/domain/entities/cart_entities.dart';
 import 'package:my_ecom_app/features/product/presentation/Bloc/cart/cart_event.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 

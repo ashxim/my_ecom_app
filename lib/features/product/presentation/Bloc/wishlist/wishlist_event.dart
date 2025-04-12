@@ -11,15 +11,15 @@ class FetchWishlist extends WishlistEvent {}
 
 class AddToWishlist extends WishlistEvent {
   final int productId;
-
-  const AddToWishlist({required this.productId});
+  final List<String> images;
+  const AddToWishlist({required this.images, required this.productId});
 
   @override
   List<Object> get props => [productId];
 }
 
 class RemoveWishlist extends WishlistEvent {
-  final String productId;
+  final int productId;
 
   const RemoveWishlist({required this.productId});
 

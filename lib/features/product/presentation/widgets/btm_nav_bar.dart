@@ -1,5 +1,6 @@
 import 'package:crystal_navigation_bar/crystal_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconly/iconly.dart';
 import 'package:my_ecom_app/features/product/presentation/screens/my_home_page.dart';
 import 'package:my_ecom_app/features/product/presentation/screens/search_screen.dart';

@@ -28,9 +28,6 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final double price;
-    final double discountPercentage;
-    final int quantity;
     return Scaffold(
         backgroundColor: Colors.transparent, // Make scaffold transparent
 

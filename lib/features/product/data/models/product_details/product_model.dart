@@ -81,9 +81,10 @@ class ProductModel extends Product {
           .map((reviewJson) => Review.fromJson(reviewJson))
           .toList(),
       thumbnail: json['thumbnail'] ?? '',
-      images: (json['images'] as List)
-          .map((imageJson) => imageJson as String)
-          .toList(),
+      images: (json['images'] as List?)
+              ?.map((imageJson) => imageJson as String)
+              .toList() ??
+          [],
     );
   }
 

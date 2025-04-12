@@ -8,7 +8,6 @@ class HotDeals extends StatelessWidget {
   final String thumbnail;
   final String title;
   final double price;
-
   final IconButton icon;
   final int productId;
   const HotDeals({
@@ -57,6 +56,13 @@ class HotDeals extends StatelessWidget {
                     height: screenHeight * 0.1,
                     width: screenWidth * 0.3,
                     fit: BoxFit.fill,
+                  ),
+                  Divider(
+                    height: 5,
+                    indent: 10,
+                    thickness: 0.5,
+                    endIndent: 10,
+                    color: AppColor.Grey,
                   ),
                   Padding(
                     padding: const EdgeInsets.all(2.0),

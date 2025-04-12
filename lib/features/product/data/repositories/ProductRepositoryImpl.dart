@@ -25,7 +25,7 @@ class ProductRepositoryImpl implements ProductRepository {
   }
 
   @override
-  Future<ProductModel> getProductById(String id) async {
+  Future<ProductModel> getProductById(int id) async {
     final response = await remoteDataSource.getProductById(id.toString());
     return ProductModel.fromJson(response.toJson());
   }

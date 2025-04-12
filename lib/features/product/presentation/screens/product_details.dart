@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:my_ecom_app/core/themes/app-color.dart';
 import 'package:my_ecom_app/core/themes/app_font.dart';
@@ -14,7 +13,9 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_add_to_cart_button/flutter_add_to_cart_button.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import '../Bloc/cart/cart_state.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+// ignore: must_be_immutable
 class ProductDetails extends StatefulWidget {
   final String title;
   final String thumbnail;
@@ -23,7 +24,7 @@ class ProductDetails extends StatefulWidget {
   final double price;
   final double? discountPercentage;
   final int id;
-  List<String> images;
+  final List<String> images;
 
   ProductDetails({
     super.key,
@@ -48,32 +49,13 @@ class _ProductDetailsState extends State<ProductDetails> {
     final SupabaseClient client = Supabase.instance.client;
     final String? userId = client.auth.currentUser?.id;
     String myprice = widget.price.toString();
-    String mydiscount = widget.price.toString();
 
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     double rating = widget.rating;
     late PageController _pageController = PageController();
 
-    double _currentPage = 0;
-
-    @override
-    void initState() {
-      super.initState();
-      _pageController = PageController();
-      // Add a listener to update _currentPage continuously.
-      _pageController.addListener(() {
-        setState(() {
-          _currentPage = _pageController.page ?? 0.0;
-        });
-      });
-    }
-
-    @override
-    void dispose() {
-      _pageController.dispose();
-      super.dispose();
-    }
+    int _currentPage = 1;
 
     return Stack(
       children: [
@@ -198,20 +180,17 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ),
                   ),
                 ),
-                DotsIndicator(
-                  animate: true,
-                  dotsCount: widget.images.length,
-                  position: _currentPage,
-                  decorator: DotsDecorator(
-                    activeColor: AppColor.Black,
-                    color: AppColor.Grey,
-                    size: const Size.square(9.0),
-                    activeSize: const Size(18.0, 9.0),
-                    activeShape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
+
+                SmoothPageIndicator(
+                  count: widget.images.length,
+                  controller: _pageController,
+                  effect: WormEffect(
+                    dotHeight: 16,
+                    dotWidth: 16,
+                    type: WormType.thinUnderground,
                   ),
                 ),
+
                 // Content area
                 Container(
                   height: screenWidth,

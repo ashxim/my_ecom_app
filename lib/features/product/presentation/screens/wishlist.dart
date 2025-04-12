@@ -37,89 +37,88 @@ class _WishlistScreenState extends State<WishlistScreen> {
             AppColor.white
           ]))),
       // Scaffold with transparent AppBar
-      BlocProvider.value(
-        value: getIt<WishlistBloc>()..add(FetchWishlist()),
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: AppBar(
-              backgroundColor: Colors.transparent, // Fully transparent
-              elevation: 0, // Remove shadow
-              title: Center(
-                child: Text(
-                  "My Wishlist",
-                  style: AppFont.appTitle(
-                    color: AppColor.principle,
-                  ),
+      Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+            backgroundColor: Colors.transparent, // Fully transparent
+            elevation: 0, // Remove shadow
+            title: Center(
+              child: Text(
+                "My Wishlist",
+                style: AppFont.appTitle(
+                  color: AppColor.principle,
                 ),
               ),
-              actions: [
-                IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const CartScreen(),
-                          ));
-                    },
-                    icon: const Icon(
-                      size: 28,
-                      Icons.shopping_bag_outlined,
-                      color: AppColor.principle,
-                    ))
-              ]),
-          body: BlocBuilder<WishlistBloc, WishlistState>(
-            builder: (context, state) {
-              if (state is WishlistLoading) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (state is WishlistLoaded) {
-                if (state.products.isEmpty) {
-                  return const Center(
-                      child: Text('No items in your wishlist.'));
-                }
-                return GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2),
-                  itemCount: state.products.length,
-                  itemBuilder: (context, index) {
-                    final product = state.products[index];
-                    return InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ProductDetails(
-                              images: product.images,
-                              id: product.id,
-                              title: product.title,
-                              price: product.price,
-                              thumbnail: product.thumbnail,
-                              description: product.description,
-                              rating: product.rating,
-                            ),
-                          ),
-                        );
-                      },
-                      child: HotDeals(
-                        productId: product.id,
-                        title: product.title,
-                        price: product.price,
-                        thumbnail: product.thumbnail,
-                        icon: IconButton(
-                            onPressed: () {
-                              context.read<WishlistBloc>().add(RemoveWishlist(
-                                  productId: product.id.toString()));
-                            },
-                            icon: const Icon(FluentIcons.delete_12_regular)),
-                      ),
-                    );
+            ),
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const CartScreen(),
+                        ));
                   },
-                );
-              } else if (state is WishlistError) {
-                return Center(child: Text('Error: ${state.message}'));
+                  icon: const Icon(
+                    size: 28,
+                    Icons.shopping_bag_outlined,
+                    color: AppColor.principle,
+                  ))
+            ]),
+        body: BlocBuilder<WishlistBloc, WishlistState>(
+          builder: (context, state) {
+            if (state is WishlistLoading) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (state is WishlistLoaded) {
+              if (state.products.isEmpty) {
+                return const Center(child: Text('No items in your wishlist.'));
               }
-              return const SizedBox.shrink();
-            },
-          ),
+              return GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2),
+                itemCount: state.products.length,
+                itemBuilder: (context, index) {
+                  final product = state.products[index];
+                  return InkWell(
+                    onTap: () {
+                      print(
+                          "Navigating to ProductDetails with images: ${product.images}");
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProductDetails(
+                            images: product.images,
+                            id: product.id,
+                            title: product.title,
+                            price: product.price,
+                            thumbnail: product.thumbnail,
+                            description: product.description,
+                            rating: product.rating,
+                          ),
+                        ),
+                      );
+                    },
+                    child: HotDeals(
+                      productId: product.id,
+                      title: product.title,
+                      price: product.price,
+                      thumbnail: product.thumbnail,
+                      icon: IconButton(
+                          onPressed: () {
+                            context
+                                .read<WishlistBloc>()
+                                .add(RemoveWishlist(productId: product.id));
+                          },
+                          icon: const Icon(FluentIcons.delete_12_regular)),
+                    ),
+                  );
+                },
+              );
+            } else if (state is WishlistError) {
+              return Center(child: Text('Error: ${state.message}'));
+            }
+            return const Center(child: Text('Error'));
+          },
         ),
       ),
     ]);

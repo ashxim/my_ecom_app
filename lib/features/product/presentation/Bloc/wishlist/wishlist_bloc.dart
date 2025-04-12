@@ -11,12 +11,12 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
 
   WishlistBloc(
       {required this.productRepository, required this.wishlistLocalData})
-      : super(WishlistInitial()) {
+      : super(WishlistLoading()) {
     on<FetchWishlist>((event, emit) async {
       try {
         final productIds = await wishlistLocalData.getWishlist();
-        final products = await Future.wait(
-            productIds.map((id) => productRepository.getProductById(id)));
+        final products = await Future.wait(productIds.map((productId) =>
+            productRepository.getProductById(int.parse(productId))));
 
         emit(WishlistLoaded(products: products));
       } catch (e) {
@@ -26,34 +26,32 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
 
     on<AddToWishlist>((event, emit) async {
       try {
+        emit(WishlistLoading()); // ✅ Trigger a loading state before updating UI
         await wishlistLocalData.addToWishlist(event.productId);
         final productIds = await wishlistLocalData.getWishlist();
-        final products = await Future.wait(
-            productIds.map((id) => productRepository.getProductById(id)));
+        final products = await Future.wait(productIds
+            .map((id) => productRepository.getProductById(int.parse(id))));
         emit(WishlistLoaded(products: products));
       } catch (e) {
         emit(WishlistError(message: 'Failed to add to wishlist: $e'));
       }
     });
-
     on<RemoveWishlist>((event, emit) async {
       try {
-        // Remove the product ID from local storage
-        await wishlistLocalData.removeFromWishlist(event.productId as int);
-        print('Removed product ID: ${event.productId}');
-        // Fetch the updated list of product IDs
-        final productIds = await wishlistLocalData.getWishlist();
-        print('Updated wishlist IDs: $productIds');
-        // Fetch the updated list of products
-        final products = await Future.wait(
-          productIds.map((id) => productRepository.getProductById(id)),
+        emit(WishlistLoading());
+        await wishlistLocalData.removeFromWishlist(event.productId);
+
+        // ✅ Fetch updated wishlist after removing an item
+        final updatedProductIds = await wishlistLocalData.getWishlist();
+        final updatedProducts = await Future.wait(
+          updatedProductIds
+              .map((id) => productRepository.getProductById(int.parse(id))),
         );
-        print('Updated products: $products');
-        // Emit the new state with updated products
-        emit(WishlistLoaded(products: products));
+
+        emit(WishlistLoaded(
+            products: updatedProducts)); // ✅ Emit new state to refresh UI
       } catch (e) {
-        // Handle errors and emit an error state
-        emit(WishlistError(message: 'Failed to remove item: $e'));
+        emit(WishlistError(message: e.toString()));
       }
     });
   }

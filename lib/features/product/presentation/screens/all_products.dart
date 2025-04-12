@@ -100,9 +100,9 @@ class AllProducts extends StatelessWidget {
                         thumbnail: product.thumbnail,
                         icon: IconButton(
                             onPressed: () {
-                              context
-                                  .read<WishlistBloc>()
-                                  .add(AddToWishlist(productId: product.id));
+                              context.read<WishlistBloc>().add(AddToWishlist(
+                                  images: product.images,
+                                  productId: product.id));
                             },
                             icon: const Icon(Icons.favorite_border_outlined)),
                       ),

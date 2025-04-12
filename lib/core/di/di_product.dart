@@ -31,7 +31,7 @@ import '../../features/product/presentation/Bloc/wishlist/wishlist_bloc.dart';
 
 final getIt = GetIt.instance;
 
-void setup() {
+void setup() async {
   // Register data sources
   getIt.registerLazySingleton<ProductRemoteDataSource>(
     () => ProductRemoteDataSource(client: http.Client()),
